@@ -1,0 +1,258 @@
+.campaign-container {
+  color: white;
+  padding: 20px;
+}
+
+/* Table styling */
+.table-container {
+  overflow-x: auto;
+}
+
+.campaign-table {
+  width: 90%;
+  border-collapse: collapse;
+  background-color: white;
+  color: black;
+  margin-top: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  font-weight: 600;
+}
+
+.loader {
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid #3498db;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.table-header {
+  padding: 10px;
+  text-align: left;
+  background-color: #333;
+  color: white;
+}
+
+.table-cell {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  text-align: left;
+}
+
+/* Buttons styling */
+button {
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.start-button {
+  padding: 5px 20px;
+  background-color: #000000;
+  color: white;
+  margin-right: 0.2rem;
+}
+
+.stop-button {
+  background-color: #ff4d4d;
+  padding: 5px 20px;
+  color: white;
+  margin-right: 0.2rem;
+}
+
+.delete-button {
+  background-color: #f44336;
+  padding: 5px 20px;
+  color: white;
+  margin-right: 0.2rem;
+}
+
+.edit-button {
+  background-color: black;
+  padding: 5px 20px;
+  color: white;
+  margin-right: 0.2rem;
+}
+
+.create-campaign-btn {
+  float: right;
+  margin-right: 2rem;
+  margin-top: 2rem;
+  cursor: pointer;
+  border-bottom: 2px solid white;
+}
+
+.edit-section {
+  background-color: white;
+  color: black;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 600px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.form-label {
+  color: black;
+}
+
+.form-control {
+  margin-bottom: 10px;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 1024px) {
+  /* For tablets and smaller devices */
+  .campaign-container {
+    padding: 15px;
+  }
+
+  .campaign-table {
+    width: 100%;
+    margin-top: 15px;
+  }
+
+  .table-header,
+  .table-cell {
+    padding: 8px;
+  }
+
+  .create-campaign-btn {
+    margin-right: 1rem;
+    margin-top: 1.5rem;
+    float: none;
+    display: block;
+    text-align: center;
+    border: 1px solid #ccc;
+  }
+
+  .edit-section {
+    padding: 15px;
+    margin: 15px auto;
+    max-width: 90%;
+  }
+
+  button {
+    padding: 5px 15px;
+    margin-bottom: 5px;
+  }
+
+  .start-button,
+  .stop-button,
+  .delete-button,
+  .edit-button {
+    padding: 5px 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* For mobile devices */
+  .campaign-container {
+    padding: 10px;
+  }
+
+  .campaign-table {
+    width: 100%;
+    margin-top: 10px;
+    font-size: 14px;
+  }
+
+  .table-header,
+  .table-cell {
+    padding: 6px;
+  }
+
+  .create-campaign-btn {
+    margin: 10px auto;
+
+    font-size: 14px;
+    padding: 5px 10px;
+
+    border: 1px solid #ccc;
+  }
+
+  .edit-section {
+    padding: 10px;
+    margin: 10px auto;
+    max-width: 95%;
+  }
+
+  button {
+    padding: 5px 10px;
+    margin-bottom: 5px;
+  }
+
+  .start-button,
+  .stop-button,
+  .delete-button,
+  .edit-button {
+    padding: 5px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* For small mobile devices */
+  .campaign-container {
+    padding: 5px;
+  }
+
+  .campaign-table {
+    width: 100%;
+    margin-top: 5px;
+    font-size: 12px;
+  }
+
+  .table-header,
+  .table-cell {
+    padding: 4px;
+  }
+
+  .create-campaign-btn {
+    margin: 5px auto;
+    float: none;
+    display: block;
+    text-align: center;
+    font-size: 12px;
+  }
+
+  .edit-section {
+    padding: 5px;
+    margin: 5px auto;
+    max-width: 100%;
+  }
+
+  button {
+    padding: 3px 8px;
+    margin-bottom: 3px;
+    font-size: 12px;
+  }
+
+  .start-button,
+  .stop-button,
+  .delete-button,
+  .edit-button {
+    padding: 3px 8px;
+  }
+}

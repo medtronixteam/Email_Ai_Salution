@@ -1,0 +1,316 @@
+.card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3em;
+  padding: 0 1rem;
+  overflow-x: hidden; /* Prevent horizontal overflow */
+}
+
+.card-custom {
+  background-color: #1c1c1e;
+  color: white;
+  border-radius: 12px;
+  padding: 1.2rem;
+  width: 100%;
+  min-width: 400px;
+  max-width: 100%; /* Ensure it does not exceed the viewport width */
+  height: auto;
+  border: 1px solid #ffffff;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, width 0.3s ease;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+.card-body {
+  margin-bottom: 2rem;
+}
+
+.card-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  color: #a64eff;
+}
+
+.card-title {
+  font-size: 1.7rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #a64eff;
+  font-size: 1.1rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus {
+  outline: none;
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Back button styling */
+.btn-back {
+  width: 100%;
+  background-color: white;
+  color: #1c1c1e;
+  border: none;
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 1.3rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-back:hover {
+  background-color: #f1f1f1;
+  transform: scale(1.05);
+}
+
+.btn-next {
+  width: 100%;
+  background-color: #a64eff;
+  color: white;
+  border: none;
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-next:hover {
+  background-color: #8c3dcc;
+  transform: scale(1.05);
+}
+
+.modal-unique .modal-content {
+  background-color: #1c1c1e;
+  color: white;
+  border-radius: 12px;
+  border: 1px solid #444;
+}
+
+.modal-unique .form-control {
+  background-color: #333;
+  border-color: #a64eff;
+  color: white;
+}
+
+.modal-unique .form-control::placeholder {
+  color: #bbb;
+}
+
+.modal-unique .form-check-input:checked {
+  background-color: #a64eff;
+  border-color: #a64eff;
+}
+
+.modal-unique .form-check-label {
+  color: white;
+}
+
+.modal-unique .btn-primary {
+  background-color: #a64eff;
+  border-color: #a64eff;
+}
+
+.modal-unique .btn-secondary {
+  background-color: #555;
+  border-color: #555;
+}
+
+.modal-unique .modal-footer .btn {
+  width: 100%;
+}
+
+.modal-unique .user-input-row .delete-user-btn {
+  margin-top: -35px;
+  margin-right: -35px;
+}
+
+/* Quill Editor */
+.ql-container {
+  border-radius: 8px;
+  border: 1px solid #a64eff;
+  margin-top: 1rem;
+}
+
+.ql-editor {
+  min-height: 200px;
+  color: black;
+}
+
+.ql-toolbar {
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.ql-container.ql-snow {
+  background-color: white;
+}
+
+/* Transition Effects */
+.slide-enter {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+.slide-enter-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 500ms, transform 500ms;
+}
+
+.slide-exit {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.slide-exit-active {
+  opacity: 0;
+  transform: scale(1.1);
+  transition: opacity 500ms, transform 500ms;
+}
+
+@media (max-width: 1024px) {
+  .card-custom {
+    padding: 1rem;
+    min-width: 300px;
+  }
+
+  .card-title {
+    font-size: 1.5rem;
+  }
+
+  .form-control {
+    font-size: 1rem;
+  }
+
+  .btn-next,
+  .btn-back {
+    font-size: 1.1rem;
+    padding: 0.8rem;
+  }
+
+  .card-icon {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .card-custom {
+    padding: 1rem;
+    max-width: 100%;
+    min-width: 300px;
+  }
+
+  .card-title {
+    font-size: 1.4rem;
+  }
+
+  .form-control {
+    font-size: 1rem;
+  }
+
+  .btn-next,
+  .btn-back {
+    font-size: 1rem;
+    padding: 0.7rem;
+  }
+
+  .card-icon {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .card-container {
+    padding: 0 0.5rem;
+  }
+
+  .card-custom {
+    padding: 1rem;
+    max-width: 90%;
+  }
+
+  .card-title {
+    font-size: 1.3rem;
+  }
+
+  .form-control {
+    font-size: 0.9rem;
+  }
+
+  .btn-next,
+  .btn-back {
+    font-size: 0.9rem;
+    padding: 0.6rem;
+  }
+
+  .card-icon {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-custom {
+    margin-top: 3rem;
+    padding: 0.8rem;
+    max-width: 100%;
+    min-width: 350px;
+  }
+
+  .card-title {
+    font-size: 1.2rem;
+  }
+
+  .form-control {
+    font-size: 0.85rem;
+  }
+
+  .btn-next,
+  .btn-back {
+    font-size: 0.85rem;
+    padding: 0.5rem;
+  }
+
+  .card-icon {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .card-custom {
+    padding: 0.5rem;
+    max-width: 100%;
+  }
+
+  .card-title {
+    font-size: 1.1rem;
+  }
+
+  .form-control {
+    font-size: 0.8rem;
+  }
+
+  .btn-next,
+  .btn-back {
+    font-size: 0.8rem;
+    padding: 0.4rem;
+  }
+
+  .card-icon {
+    font-size: 1.5rem;
+  }
+}

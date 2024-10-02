@@ -1,0 +1,232 @@
+.auth-container {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.auth-options-row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 50%;
+}
+
+.auth-option,
+.auth-option-expanded {
+  flex: 1;
+  padding: 30px 20px;
+  margin: 10px;
+  background-color: black;
+  border: 1px solid white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.auth-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.auth-button:hover {
+  background-color: #0056b3;
+}
+
+.auth-description {
+  margin-top: 10px;
+  font-size: 14px;
+  color: white;
+}
+
+.auth-option-expanded {
+  display: flex;
+  flex-direction: row;
+}
+
+.column {
+  flex: 1;
+  padding: 20px;
+  color: white;
+}
+
+.column h3 {
+  margin-bottom: 30px;
+  color: white;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  border-bottom: 2px solid white;
+  padding-bottom: 10px;
+}
+
+.column ul li {
+  list-style-type: disc !important;
+  padding: 15px 10px;
+  font-size: 18px;
+}
+
+.column form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.column form label {
+  color: white;
+  font-size: 16px;
+  width: 90%;
+  text-align: left;
+}
+
+.column form button {
+  padding: 8px;
+  background-color: #28a745;
+  border: 1px solid white;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 80%;
+  font-size: 16px;
+  transition: background-color 0.3s;
+  margin-right: 2.5rem;
+}
+
+.column form button:hover {
+  background-color: #218838;
+}
+
+.column form input {
+  margin-bottom: 15px;
+  padding: 5px;
+  width: 90%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  color: black;
+}
+
+.back-icon {
+  position: absolute;
+  top: 40px;
+  left: 50px;
+  font-size: 26px;
+  color: #007bff;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Add this to your AuthOptions.css */
+.email-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.form-group {
+  flex: 1 1 calc(50% - 15px);
+  min-width: 200px;
+}
+
+@media (max-width: 768px) {
+  .form-group {
+    flex: 1 1 100%;
+  }
+}
+
+.back-icon:hover {
+  color: #0056b3;
+}
+.column form input {
+  display: flex;
+}
+.auth-button,
+.back-button {
+  background: #333;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+  .auth-options-row {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .column {
+    flex: 1 100%;
+  }
+
+  .back-icon {
+    font-size: 22px;
+  }
+
+  .column h3 {
+    font-size: 20px;
+  }
+
+  .column ul {
+    font-size: 14px;
+  }
+
+  .column form label {
+    font-size: 14px;
+  }
+
+  .column form button {
+    padding: 10px;
+  }
+
+  .column form input {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-options-row {
+    flex-direction: column;
+  }
+
+  .auth-option-expanded {
+    flex-direction: column;
+  }
+
+  .column h3 {
+    font-size: 18px;
+  }
+
+  .column ul {
+    font-size: 12px;
+  }
+
+  .column form label {
+    font-size: 12px;
+  }
+
+  .auth-button {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .back-icon {
+    font-size: 20px;
+  }
+
+  .column form input {
+    font-size: 12px;
+  }
+
+  .column form button {
+    font-size: 14px;
+  }
+}

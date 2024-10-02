@@ -1,0 +1,138 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: black;
+  color: white;
+}
+
+.login-card {
+  background: linear-gradient(135deg, #800080, #20034d);
+  border-radius: 15px;
+  padding: 40px 30px;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  width: 400px;
+  position: relative;
+}
+
+.avatar {
+  margin-bottom: 20px;
+  background-color: #252525;
+  padding: 20px;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+.user-icon {
+  font-size: 60px;
+  color: white;
+}
+
+.input-field {
+  width: 100%;
+  padding: 15px;
+  margin: 12px 0;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 30px;
+  background-color: white;
+  color: rgb(0, 0, 0);
+  font-size: 16px;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+  padding-right: 50px;
+}
+
+.input-field:focus,
+.input-field:hover {
+  border: 1px solid #a064f5;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+}
+
+.input-field {
+  width: 100%;
+  padding: 15px;
+  margin: 12px 0;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 30px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 16px;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+  padding-right: 40px;
+}
+
+.password-toggle-icon {
+  position: absolute;
+  right: 50px;
+  top: 65%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  cursor: pointer;
+  color: #a064f5;
+}
+
+.password-toggle-icon:hover {
+  color: #a064f5;
+}
+
+.login-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #a064f5;
+  border: none;
+  border-radius: 30px;
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #8245cc;
+}
+
+.signup-text {
+  margin-top: 15px;
+  font-size: 14px;
+  color: white;
+}
+
+.create-account-link {
+  margin-left: 5px;
+  color: #a064f5;
+  text-decoration: underline;
+}
+
+.create-account-link:hover {
+  color: #f5a2fc;
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .login-card {
+    width: 100%;
+    padding: 30px;
+    margin: 20px;
+  }
+
+  .input-field {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  .login-button {
+    font-size: 16px;
+    padding: 10px;
+  }
+
+  .password-toggle-icon {
+    right: 15px;
+    font-size: 18px;
+  }
+}

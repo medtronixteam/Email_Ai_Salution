@@ -1,0 +1,51 @@
+.cards-container {
+  margin-top: 2rem;
+  gap: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card {
+  border-top: 5px solid #a64eff;
+  width: 263px;
+  height: 270px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.2s;
+}
+.card svg {
+  font-size: 50px;
+  color: #a64eff;
+  margin: 0 auto;
+
+}
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card h6 {
+  margin: 10px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #6a0287;
+}
+
+.card .count {
+  font-size: 26px;
+  font-weight: bold;
+  color: #a64eff;
+  border-radius: 50%;
+  background-color: #ebe0f9;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  box-shadow: inset 5px 5px 15px rgba(137, 35, 196, 0.24);
+}
