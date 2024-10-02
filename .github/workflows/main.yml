@@ -1,0 +1,38 @@
+
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - master  # or the branch you want to monitor
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up SSH for GitHub
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: SSH into server and run commands
+      run: |
+        ssh -o StrictHostKeyChecking=no ubuntu@52.23.130.141 "
+          sudo bash -c '
+            cd /root/email_ai_solutions/Email_Ai_Salution
+            
+            # Pull the latest code
+            git pull origin master
+            
+            # Go one step back and build the frontend
+            cd ..
+            docker compose build frontend
+            
+            # Start the frontend in detached mode
+            docker compose up frontend -d
+          '
+        "
