@@ -8,12 +8,12 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 import LandingPage from "./LandingPage/LandingPage.jsx";
 import Dashboard from "./Dashboard.jsx";
 import AddGroups from "./components/AddGroups/AddGroups.jsx";
-import LinkEmailAccounts from "./components/LinkEmailAccounts/LinkEmailAccounts.jsx"; 
+import LinkEmailAccounts from "./components/LinkEmailAccounts/LinkEmailAccounts.jsx";
 import "./App.css";
 import AuthOptions from "./components/AuthOptions/AuthOptions.jsx";
 import BusinessEmailForm from "./components/BusinessEmailForm/BusinessEmailForm.jsx";
 import Campaign from "./components/Dashboard/Campaign/Campaign.jsx";
-
+import config from "./config";
 const App = () => {
   const { token } = useAuth();
   const [groups, setGroups] = useState([]);
@@ -23,15 +23,12 @@ const App = () => {
       if (!token) return;
 
       try {
-        const response = await fetch(
-          "https://destinique.medtronix.world/api/groups",
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await fetch(`${config.baseUrl}/api/groups`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         if (response.ok) {
           const data = await response.json();

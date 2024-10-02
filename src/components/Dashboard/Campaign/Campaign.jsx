@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import { Form, Button } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../../../contexts/AuthProvider";
-import "./Campaign.css"; // Import the CSS file
+import "./Campaign.css";
 import config from "../../../config";
+
 const Campaign = () => {
   const [campaigns, setCampaigns] = useState([]);
   const [groups, setGroups] = useState([]);
@@ -37,7 +38,8 @@ const Campaign = () => {
         },
       });
       if (response.status === 200 && response.data.status === "success") {
-        setCampaigns(response.data.data);
+        // console.log("response.data.data", response.data);
+        setCampaigns(response.data.data || []);
       }
     } catch (error) {
       console.error("Error fetching campaigns:", error);
@@ -57,13 +59,13 @@ const Campaign = () => {
         },
       });
       if (response.status === 200) {
-        setGroups(response.data);
+        setGroups(response.data || []);
       }
     } catch (error) {
       console.error("Error fetching groups:", error);
       toast.error("Failed to fetch groups.");
     } finally {
-      setLoading(false); // Set loading to false after the API call
+      setLoading(false);
     }
   };
 
@@ -91,7 +93,7 @@ const Campaign = () => {
       console.error("Error starting the campaign:", error);
       toast.error("Failed to start the campaign. Please try again.");
     } finally {
-      setLoading(false); // Set loading to false after the API call
+      setLoading(false);
     }
   };
 
@@ -112,7 +114,7 @@ const Campaign = () => {
       console.error("Error stopping the campaign:", error);
       toast.error("Failed to stop the campaign. Please try again.");
     } finally {
-      setLoading(false); // Set loading to false after the API call
+      setLoading(false);
     }
   };
 
@@ -133,7 +135,7 @@ const Campaign = () => {
       console.error("Error deleting the campaign:", error);
       toast.error("Failed to delete the campaign. Please try again.");
     } finally {
-      setLoading(false); // Set loading to false after the API call
+      setLoading(false);
     }
   };
 
@@ -166,7 +168,7 @@ const Campaign = () => {
       console.error("Error submitting campaign data:", error);
       toast.error("Failed to submit campaign. Please try again.");
     } finally {
-      setLoading(false); // Set loading to false after the API call
+      setLoading(false);
     }
   };
 
@@ -236,7 +238,7 @@ const Campaign = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {campaigns.map((campaign) => (
+                  {(campaigns || []).map((campaign) => (
                     <tr key={campaign.id}>
                       <td className="table-cell">{campaign.name}</td>
                       <td className="table-cell">{campaign.status}</td>
@@ -313,12 +315,11 @@ const Campaign = () => {
                 onChange={handleFormChange}
                 className="form-control">
                 <option value="">Select Group</option>
-                {Array.isArray(groups.data) &&
-                  groups.data.map((group) => (
-                    <option key={group.id} value={group.id}>
-                      {group.name}
-                    </option>
-                  ))}
+                {(groups.data || []).map((group) => (
+                  <option key={group.id} value={group.id}>
+                    {group.name}
+                  </option>
+                ))}
               </Form.Control>
             </Form.Group>
 
