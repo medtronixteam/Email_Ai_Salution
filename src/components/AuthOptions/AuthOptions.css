@@ -103,16 +103,6 @@
   background-color: #218838;
 }
 
-.column form input {
-  margin-bottom: 15px;
-  padding: 5px;
-  width: 90%;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-  color: black;
-}
-
 .back-icon {
   position: absolute;
   top: 40px;
@@ -123,7 +113,6 @@
   font-weight: bold;
 }
 
-/* Add this to your AuthOptions.css */
 .email-form {
   display: flex;
   flex-wrap: wrap;
@@ -144,9 +133,7 @@
 .back-icon:hover {
   color: #0056b3;
 }
-.column form input {
-  display: flex;
-}
+
 .auth-button,
 .back-button {
   background: #333;
@@ -186,10 +173,6 @@
   .column form button {
     padding: 10px;
   }
-
-  .column form input {
-    font-size: 14px;
-  }
 }
 
 @media (max-width: 480px) {
@@ -220,10 +203,6 @@
 
   .back-icon {
     font-size: 20px;
-  }
-
-  .column form input {
-    font-size: 12px;
   }
 
   .column form button {

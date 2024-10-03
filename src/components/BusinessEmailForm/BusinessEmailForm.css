@@ -1,16 +1,10 @@
 .email-form-containers {
   margin: 20px auto;
-  max-width: 900px;
+  width: 100%;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
   color: white;
-}
-
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
 }
 
 .email-form-container {
@@ -40,18 +34,14 @@
   padding-bottom: 1rem;
 }
 
-.form-container {
-  flex: 1;
-  padding: 20px;
-}
-
 .email-form {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: 15px;
 }
 
 .form-group {
+  flex: 0 0 calc(50% - 15px);
   display: flex;
   flex-direction: column;
 }
@@ -70,6 +60,7 @@
   font-size: 14px;
   outline: none;
   transition: border-color 0.3s ease;
+  width: 100%;
 }
 
 .form-group input:focus {
@@ -101,5 +92,13 @@ button:hover {
     border-bottom: 1px solid #ddd;
     padding-bottom: 15px;
     margin-bottom: 15px;
+  }
+
+  .form-group {
+    flex: 1 1 100%; /* Each input takes full width on smaller screens */
+  }
+
+  .form-group input {
+    font-size: 14px;
   }
 }

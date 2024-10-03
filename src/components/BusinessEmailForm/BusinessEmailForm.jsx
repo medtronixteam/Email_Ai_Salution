@@ -30,7 +30,7 @@ const BusinessEmailForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-     const baseUrl = config.baseUrl;
+    const baseUrl = config.baseUrl;
     try {
       const response = await fetch(`${baseUrl}/api/email`, {
         method: "POST",
@@ -44,10 +44,9 @@ const BusinessEmailForm = () => {
         }),
       });
 
+      const data = await response.json();
+
       if (response.status === 200) {
-        const data = await response.json();
-        console.log(data);
- 
         setFormData({
           main_mailer: "Mail",
           main_host: "smtp@gmail.com",
@@ -59,20 +58,23 @@ const BusinessEmailForm = () => {
           main_from_name: "",
         });
 
-        // Show success toast
-        toast.success("Email settings saved successfully!");
-      } else { 
-        toast.error("Failed to save email settings. Please try again.");
+        // Show success toast with message from the API response
+        toast.success(data.message || "Email settings saved successfully!");
+      } else {
+        // Show error toast with message from the API response
+        toast.error(
+          data.message || "Failed to save email settings. Please try again."
+        );
       }
     } catch (error) {
-      console.error("Error:", error); 
+      console.error("Error:", error);
+      // Show a generic error toast
       toast.error("An error occurred. Please try again.");
     }
   };
 
   return (
     <center>
-      {/* ToastContainer must be rendered once at the top level */}
       <ToastContainer />
       <div className="container email-form-containers">
         <div className="row">
@@ -169,7 +171,9 @@ const BusinessEmailForm = () => {
                   onChange={handleInputChange}
                 />
               </div>
-              <button type="submit">Submit</button>
+              <button type="submit" style={{ width: "100%" }}>
+                Submit
+              </button>
             </form>
           </div>
         </div>

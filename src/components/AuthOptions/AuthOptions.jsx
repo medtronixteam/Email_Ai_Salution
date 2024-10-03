@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import { toast, ToastContainer } from "react-toastify"; // Import toast and ToastContainer
+import "react-toastify/dist/ReactToastify.css"; // Import toast styles
 import "./AuthOptions.css";
 import { useAuth } from "../../contexts/AuthProvider";
 import config from "../../config";
+
 const AuthOptions = () => {
   const [showOtpForm, setShowOtpForm] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -47,10 +50,11 @@ const AuthOptions = () => {
           mail_type: "gmail",
         }),
       });
-      if (response.status === 200) {
-        const data = await response.json();
-        console.log(data);
 
+      const data = await response.json(); // Extract the response JSON
+
+      if (response.status === 200) {
+        // Reset form data
         setFormData({
           main_mailer: "smtp",
           main_host: "smtp.gmail.com",
@@ -61,9 +65,17 @@ const AuthOptions = () => {
           main_from_address: "",
           main_from_name: "",
         });
+
+        // Show success toast with message from the API
+        toast.success(data.message || "Email settings saved successfully!");
+      } else {
+        // Show error toast with message from the API
+        toast.error(data.message || "Failed to save email settings.");
       }
     } catch (error) {
       console.error("Error:", error);
+      // Show generic error toast
+      toast.error("An error occurred. Please try again.");
     }
   };
 
@@ -78,17 +90,24 @@ const AuthOptions = () => {
         },
       });
 
+      const data = await response.json();
+
       if (response.status === 200) {
-        const data = await response.json();
         const googleAuthUrl = data.message;
 
         const newWindow = window.open(googleAuthUrl);
         if (newWindow) {
           newWindow.focus();
         }
+
+        // Show success toast
+        toast.success("Google authentication started!");
+      } else {
+        toast.error("Failed to initiate Google authentication.");
       }
     } catch (error) {
       console.error("Error fetching Google Auth URL:", error);
+      toast.error("An error occurred while fetching Google Auth URL.");
     } finally {
       setLoading(false);
     }
@@ -96,6 +115,9 @@ const AuthOptions = () => {
 
   return (
     <div className="auth-container">
+      {/* ToastContainer for showing notifications */}
+      <ToastContainer />
+
       {!showOtpForm ? (
         <div className="auth-options-row">
           <div className="auth-option">
@@ -108,20 +130,6 @@ const AuthOptions = () => {
               and is used for secure authentication.
             </p>
           </div>
-          {/* <div className="auth-option">
-            <button
-              className="auth-button"
-              onClick={handleGoogleAuthClick}
-              disabled={loading}>
-              {loading ? "Loading..." : "Use Google Auth"}
-            </button>
-            <p className="auth-description">
-              Google Authenticator is a free app that can be installed on your
-              mobile phone and is used for two-factor authentication (2FA) by
-              generating one-time passcodes. This app makes your accounts more
-              secure
-            </p>
-          </div> */}
         </div>
       ) : (
         <center>
@@ -153,6 +161,8 @@ const AuthOptions = () => {
                     border: "none",
                     padding: "5px 10px",
                     cursor: "pointer",
+                    width: "100px",
+                    borderRadius: "5px",
                   }}>
                   Back
                 </button>
@@ -196,6 +206,7 @@ const AuthOptions = () => {
                       name="main_username"
                       value={formData.main_username}
                       onChange={handleInputChange}
+                      placeholder="Enter your email address"
                     />
                   </div>
                   <div className="form-group">
@@ -206,6 +217,7 @@ const AuthOptions = () => {
                       name="main_password"
                       value={formData.main_password}
                       onChange={handleInputChange}
+                      placeholder="Enter your password"
                     />
                   </div>
                   <div className="form-group">
@@ -236,9 +248,14 @@ const AuthOptions = () => {
                       name="main_from_name"
                       value={formData.main_from_name}
                       onChange={handleInputChange}
+                      placeholder="Enter your name"
                     />
                   </div>
-                  <button type="submit">Submit</button>
+                  <button
+                    type="submit"
+                    style={{ width: "100%", padding: "12px" }}>
+                    Submit
+                  </button>
                 </form>
               </div>
             </div>
