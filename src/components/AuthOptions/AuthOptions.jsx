@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { toast, ToastContainer } from "react-toastify"; // Import toast and ToastContainer
-import "react-toastify/dist/ReactToastify.css"; // Import toast styles
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./AuthOptions.css";
 import { useAuth } from "../../contexts/AuthProvider";
 import config from "../../config";
