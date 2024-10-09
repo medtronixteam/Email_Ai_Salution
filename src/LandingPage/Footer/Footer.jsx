@@ -59,7 +59,7 @@ const Footer = () => {
         </div>
         <hr />
         <p className="text-center mb-0">
-          &#169; All rights reserved by <span> Mails.ai</span>
+          &#169; All rights reserved by <span>Email-AI</span>
         </p>
       </div>
     </footer>

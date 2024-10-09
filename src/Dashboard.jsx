@@ -20,7 +20,7 @@ const Dashboard = () => {
   const isDashboardRoute = location.pathname === "/dashboard";
 
   const [campaignData, setCampaignData] = useState(null);
-  const [loading, setLoading] = useState(true); // Loader state
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchCampaignData = async () => {
@@ -38,7 +38,7 @@ const Dashboard = () => {
       } catch (error) {
         console.error("Error fetching campaign data:", error);
       } finally {
-        setLoading(false); // Stop loading once API call is complete
+        setLoading(false); 
       }
     };
 
@@ -50,7 +50,7 @@ const Dashboard = () => {
       <Navbar />
       <ToastContainer />
 
-      {loading ? ( // Show loader while loading is true
+      {loading ? ( 
         <div className="loader"></div>
       ) : (
         isDashboardRoute &&
