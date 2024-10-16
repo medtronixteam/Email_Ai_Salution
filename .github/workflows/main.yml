@@ -1,4 +1,3 @@
-
 name: CI/CD Pipeline
 
 on:
@@ -14,25 +13,21 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up SSH for GitHub
-      uses: webfactory/ssh-agent@v0.5.3
-      with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+    - name: Install expect
+      run: sudo apt-get install -y expect
 
-    - name: SSH into server and run commands
+    - name: SSH into server and run commands using password
       run: |
-        ssh -o StrictHostKeyChecking=no ubuntu@52.23.130.141 "
-          sudo bash -c '
-            cd /root/email_ai_solutions/Email_Ai_Salution
-            
-            # Pull the latest code
-            git pull origin main
-            
-            # Go one step back and build the frontend
-            cd ..
-            docker compose build frontend
-            
-            # Start the frontend in detached mode
-            docker compose up frontend -d
-          '
-        "
+        expect <<EOF
+        spawn ssh -o StrictHostKeyChecking=no root@${{ secrets.SERVER_IP }}
+        expect "password:"
+        send "${{ secrets.SSH_PASSWORD }}\r"
+        expect "#"
+        send "cd /root/11_email_ai/Email_Ai_Salution\r"
+        send "git pull origin main\r"
+        send "cd ..\r"
+        send "docker compose build frontend\r"
+        send "docker compose up frontend -d\r"
+        expect "#"
+        send "exit\r"
+        EOF
