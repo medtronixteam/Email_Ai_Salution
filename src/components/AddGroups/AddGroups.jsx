@@ -179,7 +179,12 @@ const AddGroups = ({ groups, setGroups }) => {
   return (
     <div
       className="add-groups-container"
-      style={{ color: "white", marginTop: "50px" }}>
+      style={{
+        paddingTop: "10px",
+        backgroundColor: "white",
+        borderRadius: "8px",
+        boxShadow: " 0 1px 2px rgba(0, 0, 0, 0.6)",
+      }}>
       <ToastContainer />
 
       <div className="header-container">

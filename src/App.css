@@ -34,7 +34,7 @@ a:hover {
 }
 
 body {
-  background-color: rgb(0, 0, 0);
+  background-color: #6846B0 !important;
   overflow-x: hidden;
 }
 .header .logo a {

@@ -78,7 +78,9 @@ const BusinessEmailForm = () => {
       <ToastContainer />
       <div className="container email-form-containers">
         <div className="row">
-          <div className="col-md-6 email-form-container">
+          <div
+            className="col-md-6 email-form-container "
+            style={{ color: "black" }}>
             <h3>Instructions</h3>
             <ul>
               <li>Go to your Google Account Security Settings.</li>

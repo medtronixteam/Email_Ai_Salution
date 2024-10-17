@@ -1,5 +1,5 @@
 const config = {
-  baseUrl: "http://52.23.130.141:8000",
+  baseUrl: "https://admin.emailai.world",
 };
 
 export default config;

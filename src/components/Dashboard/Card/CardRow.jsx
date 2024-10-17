@@ -379,7 +379,8 @@ const CardRow = () => {
                 </Form.Control.Feedback>
                 <button
                   onClick={() => setShowModal(true)}
-                  className="btn btn-link mt-3 create-group-link">
+                  className="btn btn-link mt-3 create-group-link"
+                  style={{ color: "black", fontWeight: "bold" }}>
                   Create a new group
                 </button>
                 <button onClick={handleNext} className="btn btn-next">
@@ -470,12 +471,7 @@ const CardRow = () => {
 
         {step === 5 && (
           <CSSTransition key="step5" timeout={500} classNames="slide">
-            <div
-              className="card-custom"
-              style={{
-                width: "80%", // Increase width of the Mail Content card
-                margin: "0 auto", // Center the card
-              }}>
+            <div className="card-custom">
               <div className="card-body">
                 <h5 className="card-title">Mail Content</h5>
                 <Form.Control
@@ -520,13 +516,16 @@ const CardRow = () => {
       <Modal
         show={showModal}
         onHide={() => setShowModal(false)}
-        className="modal-unique">
+        className="modal-unique"
+        style={{ backgroundColor: "white", color: "black" }}>
         <Modal.Header closeButton>
           <Modal.Title>Create New Group</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form.Group>
-            <Form.Label>Group Name</Form.Label>
+            <Form.Label>
+              <h6 style={{ color: "black" }}>Group Name</h6>
+            </Form.Label>
             <Form.Control
               type="text"
               name="groupName"

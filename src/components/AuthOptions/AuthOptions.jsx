@@ -135,7 +135,9 @@ const AuthOptions = () => {
         <center>
           <div className="container email-form-containers">
             <div className="row">
-              <div className="col-md-6 email-form-container">
+              <div
+                className="col-md-6 email-form-container"
+                style={{ color: "black" }}>
                 <h3>Instructions</h3>
                 <ul>
                   <li>Go to your Google Account Security Settings.</li>
@@ -154,8 +156,8 @@ const AuthOptions = () => {
                   onClick={handleBackClick}
                   style={{
                     position: "absolute",
-                    top: "10px",
-                    left: "10px",
+                    top: "20px",
+                    left: "30px",
                     backgroundColor: "#f44336",
                     color: "white",
                     border: "none",

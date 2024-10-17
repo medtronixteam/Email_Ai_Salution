@@ -14,7 +14,9 @@ const Navbar = () => {
   };
 
   return (
-    <header className="header" style={{ backgroundColor: "black" }}>
+    <header
+      className="header"
+      style={{ backgroundColor: "black", color: "white" }}>
       <div className="container">
         <nav className="navbar navbar-expand-lg navbar-custom">
           <div className="container-fluid">
@@ -56,8 +58,12 @@ const Navbar = () => {
                   </Link>
                 </li>
               </ul>
-              <div className="d-flex align-items-center">
-                <div className="dropdown">
+              <div
+                className="d-flex align-items-center"
+                style={{ color: "black", backgroundColor: "black" }}>
+                <div
+                  className="dropdown"
+                  style={{ color: "black", backgroundColor: "black" }}>
                   <button
                     className="btn btn-custom dropdown-toggle"
                     style={{ backgroundColor: "black", color: "white" }}
@@ -94,4 +100,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
- 

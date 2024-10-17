@@ -68,7 +68,7 @@ const Login = () => {
         <form className="login-form" onSubmit={handleSubmit}>
           <input
             type="email"
-            placeholder="Email"
+            placeholder="Email Type here..."
             className="input-field"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -77,7 +77,7 @@ const Login = () => {
           <div className="password-field-wrapper">
             <input
               type={isPasswordVisible ? "text" : "password"}
-              placeholder="Password"
+              placeholder="Password Type here..."
               className="input-field password-input"
               value={password}
               onChange={(e) => setPassword(e.target.value)}

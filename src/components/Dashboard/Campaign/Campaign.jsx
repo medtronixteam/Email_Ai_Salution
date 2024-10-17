@@ -218,75 +218,100 @@ const Campaign = () => {
       )}
 
       {showCampaignsTable && !showEditSection && (
-        <div>
-          <Link to="/dashboard/create-campaign" className="create-campaign-btn">
-            Create Campaign
-          </Link>
+        <div
+          className="campaign-card-wrapper"
+          style={{
+            paddingTop: "10px",
+            backgroundColor: "white",
+            borderRadius: "8px",
+            boxShadow: " 0 1px 2px rgba(0, 0, 0, 0.6)",
+          }}>
+          <div className="campaign-card-container">
+            <div>
+              <Link
+                to="/dashboard/create-campaign"
+                className="create-campaign-btn"
+                style={{
+                  color: "black",
+                  borderBottom: "2px solid black",
+                  fontWeight: "bold",
+                }}>
+                Create Campaign
+              </Link>
 
-          <h2 style={{ textAlign: "center", margin: "20px" }}>
-            Campaigns List
-          </h2>
-          <div className="table-container">
-            <center>
-              <table className="campaign-table">
-                <thead>
-                  <tr>
-                    <th className="table-header">Name</th>
-                    <th className="table-header">Status</th>
-                    <th className="table-header">Time</th>
-                    <th className="table-header">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {(campaigns || []).map((campaign) => (
-                    <tr key={campaign.id}>
-                      <td className="table-cell">{campaign.name}</td>
-                      <td className="table-cell">{campaign.status}</td>
-                      <td className="table-cell">{campaign.campaign_time}</td>
-                      <td className="table-cell">
-                        {campaign.status === "pending" && (
-                          <button
-                            className="start-button"
-                            onClick={() => startCampaign(campaign.id)}>
-                            Start
-                          </button>
-                        )}
-                        {campaign.status === "completed" && (
-                          <button
-                            className="start-button"
-                            onClick={() => startCampaign(campaign.id)}>
-                            Start again
-                          </button>
-                        )}
+              <h2
+                style={{
+                  textAlign: "center",
+                  margin: "20px",
+                  color: "black !important",
+                }}>
+                Campaigns List
+              </h2>
+              <div className="table-container">
+                <center>
+                  <table className="campaign-table">
+                    <thead>
+                      <tr>
+                        <th className="table-header">Name</th>
+                        <th className="table-header">Status</th>
+                        <th className="table-header">Time</th>
+                        <th className="table-header">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {(campaigns || []).map((campaign) => (
+                        <tr key={campaign.id}>
+                          <td className="table-cell">{campaign.name}</td>
+                          <td className="table-cell">{campaign.status}</td>
+                          <td className="table-cell">
+                            {campaign.campaign_time}
+                          </td>
+                          <td className="table-cell">
+                            {campaign.status === "pending" && (
+                              <button
+                                className="start-button"
+                                onClick={() => startCampaign(campaign.id)}>
+                                Start
+                              </button>
+                            )}
+                            {campaign.status === "completed" && (
+                              <button
+                                className="start-button"
+                                onClick={() => startCampaign(campaign.id)}>
+                                Start again
+                              </button>
+                            )}
 
-                        {campaign.status === "started" && (
-                          <button
-                            className="stop-button"
-                            onClick={() => stopCampaign(campaign.id)}>
-                            Stop
-                          </button>
-                        )}
+                            {campaign.status === "started" && (
+                              <button
+                                className="stop-button"
+                                onClick={() => stopCampaign(campaign.id)}>
+                                Stop
+                              </button>
+                            )}
 
-                        {campaign.status === "pending" && (
-                          <button
-                            className="edit-button"
-                            onClick={() => handleEditClick(campaign)}>
-                            Edit
-                          </button>
-                        )}
-                        {campaign.status !== "completed" && (
-                          <button
-                            className="delete-button"
-                            onClick={() => deleteCampaign(campaign.id)}>
-                            Delete
-                          </button>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </center>
+                            {campaign.status === "pending" && (
+                              <button
+                                className="edit-button"
+                                onClick={() => handleEditClick(campaign)}>
+                                Edit
+                              </button>
+                            )}
+                            {campaign.status !== "completed" && (
+                              <button
+                                className="delete-button"
+                                onClick={() => deleteCampaign(campaign.id)}>
+                                Delete
+                              </button>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </center>
+              </div>
+            </div>
           </div>
         </div>
       )}
