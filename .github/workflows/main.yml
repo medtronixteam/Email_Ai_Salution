@@ -24,7 +24,7 @@ jobs:
         expect "password:"
         send "${{ secrets.SSH_PASSWORD }}\r"
         expect "#"
-        send "cd /root/11_email_ai/email_ai_backend\r"
+        send "cd /root/11_email_ai/Email_Ai_Salution\r"
         expect "#"
         send "git pull origin main\r"
         expect "#"
