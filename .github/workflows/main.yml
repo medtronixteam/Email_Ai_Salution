@@ -28,6 +28,8 @@ jobs:
         expect "#"
         send "git pull origin main\r"
         expect "#"
+        send "cd ..\r"
+        expect "#"
         send "docker compose build frontend\r"
         expect "#"
         send "docker compose up frontend -d\r"
