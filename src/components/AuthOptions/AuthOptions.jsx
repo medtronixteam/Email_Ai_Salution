@@ -137,7 +137,7 @@ const AuthOptions = () => {
             <div className="row">
               <div
                 className="col-md-6 email-form-container"
-                style={{ color: "black" }}>
+                style={{ color: "white" }}>
                 <h3>Instructions</h3>
                 <ul>
                   <li>Go to your Google Account Security Settings.</li>

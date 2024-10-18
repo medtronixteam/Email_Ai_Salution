@@ -3,11 +3,11 @@
   width: 100%;
   padding: 20px;
   border-radius: 8px;
-  color: rgb(10, 10, 10) !important;
+  color: rgb(255, 255, 255) !important;
 }
 
 .email-form-container {
-  color: black !important;
+  color: rgb(255, 255, 255) !important;
   flex: 1;
   padding: 20px;
   border-right: 1px solid #ddd;
@@ -31,6 +31,7 @@
   line-height: 1.5;
   list-style: disc;
   padding-bottom: 1rem;
+  color: white !important;
 }
 
 .email-form {
