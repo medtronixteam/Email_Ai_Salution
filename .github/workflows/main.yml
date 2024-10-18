@@ -19,14 +19,19 @@ jobs:
     - name: SSH into server and run commands using password
       run: |
         expect <<EOF
+        set timeout -1
         spawn ssh -o StrictHostKeyChecking=no root@${{ secrets.SERVER_IP }}
         expect "password:"
         send "${{ secrets.SSH_PASSWORD }}\r"
         expect "#"
         send "cd /root/11_email_ai/Email_Ai_Salution\r"
+        expect "#"
         send "git pull origin main\r"
+        expect "#"
         send "cd ..\r"
+        expect "#"
         send "docker compose build frontend\r"
+        expect "#"
         send "docker compose up frontend -d\r"
         expect "#"
         send "exit\r"
