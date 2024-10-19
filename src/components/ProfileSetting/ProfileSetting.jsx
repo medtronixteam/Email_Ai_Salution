@@ -464,7 +464,10 @@ const ProfileSetting = () => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  const [showOldPassword, setShowOldPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const { token } = useAuth();
 
   const handlePasswordSubmit = async (e) => {
@@ -512,7 +515,7 @@ const ProfileSetting = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, 
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           timezone,
@@ -530,8 +533,16 @@ const ProfileSetting = () => {
     }
   };
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
+  const toggleOldPasswordVisibility = () => {
+    setShowOldPassword(!showOldPassword);
+  };
+
+  const toggleNewPasswordVisibility = () => {
+    setShowNewPassword(!showNewPassword);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
   };
 
   return (
@@ -563,7 +574,7 @@ const ProfileSetting = () => {
             <label className="profile-label">Old Password</label>
             <div className="password-input-container">
               <input
-                type={showPassword ? "text" : "password"}
+                type={showOldPassword ? "text" : "password"} // Use showOldPassword here
                 placeholder="Enter Old Password"
                 value={oldPassword}
                 onChange={(e) => setOldPassword(e.target.value)}
@@ -572,15 +583,16 @@ const ProfileSetting = () => {
               />
               <span
                 className="password-toggle-icon"
-                onClick={togglePasswordVisibility}>
-                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                onClick={() => setShowOldPassword(!showOldPassword)} // Use setShowOldPassword here
+              >
+                <FontAwesomeIcon icon={showOldPassword ? faEyeSlash : faEye} />
               </span>
             </div>
 
             <label className="profile-label">New Password</label>
             <div className="password-input-container">
               <input
-                type={showPassword ? "text" : "password"}
+                type={showNewPassword ? "text" : "password"} // Use showNewPassword here
                 placeholder="Enter New Password"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
@@ -589,15 +601,16 @@ const ProfileSetting = () => {
               />
               <span
                 className="password-toggle-icon"
-                onClick={togglePasswordVisibility}>
-                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                onClick={() => setShowNewPassword(!showNewPassword)} // Use setShowNewPassword here
+              >
+                <FontAwesomeIcon icon={showNewPassword ? faEyeSlash : faEye} />
               </span>
             </div>
 
             <label className="profile-label">Confirm New Password</label>
             <div className="password-input-container">
               <input
-                type={showPassword ? "text" : "password"}
+                type={showConfirmPassword ? "text" : "password"} // Use showConfirmPassword here
                 placeholder="Confirm New Password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
@@ -606,8 +619,11 @@ const ProfileSetting = () => {
               />
               <span
                 className="password-toggle-icon"
-                onClick={togglePasswordVisibility}>
-                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)} // Use setShowConfirmPassword here
+              >
+                <FontAwesomeIcon
+                  icon={showConfirmPassword ? faEyeSlash : faEye}
+                />
               </span>
             </div>
 
