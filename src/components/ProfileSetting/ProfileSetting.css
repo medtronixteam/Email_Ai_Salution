@@ -1,0 +1,195 @@
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3rem;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.option-cards {
+  display: flex;
+  gap: 60px;
+}
+
+.option-card {
+  background-color: #fff;
+  padding: 40px 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 200px;
+}
+
+.option-card h3 {
+  margin-top: 10px;
+  font-size: 18px;
+  color: #333;
+}
+
+.option-icon {
+  font-size: 30px;
+  color: #6c42dc;
+}
+
+.profile-form-container {
+  background-color: white;
+  padding: 25px 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  width: 500px;
+  max-width: 100%;
+}
+
+.profile-heading {
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+.profile-label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 16px;
+  color: #333;
+  font-weight: 600;
+}
+
+.password-input-container {
+  position: relative;
+}
+
+.profile-input {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  color: #333;
+  box-sizing: border-box;
+  transition: border 0.3s ease;
+}
+
+.profile-input:focus {
+  border: 1px solid #6c42dc;
+  outline: none;
+}
+
+.password-toggle-icon {
+  position: absolute;
+  right: 15px;
+  top: 40%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 18px;
+  color: #878787;
+}
+
+.profile-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #6c42dc;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.profile-button:hover {
+  background-color: #5a37ba;
+}
+
+.back-button {
+  margin: 20px 0 0 0;
+  padding: 12px;
+  background-color: #000000;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.back-button:hover {
+  background-color: #2b2a2a;
+}
+
+/* Media Queries */
+
+/* Tablets and smaller devices */
+@media (max-width: 768px) {
+  .option-cards {
+    gap: 20px; /* Reduce gap between cards */
+    flex-direction: column; /* Stack cards vertically */
+  }
+
+  .option-card {
+    width: 100%; /* Cards take full width on small screens */
+    max-width: 300px;
+  }
+
+  .profile-form-container {
+    width: 100%; /* Make the form take full width */
+    padding: 20px;
+  }
+
+  .profile-button,
+  .back-button {
+    padding: 14px; /* Adjust padding for buttons */
+    font-size: 14px;
+  }
+
+  .profile-heading {
+    font-size: 24px; /* Reduce font size for smaller screens */
+  }
+}
+
+/* Mobile devices */
+@media (max-width: 480px) {
+  .profile-container {
+    margin-top: 1rem; /* Reduce margin for mobile screens */
+  }
+
+  .option-card {
+    padding: 20px 10px; /* Reduce padding for cards */
+  }
+
+  .option-icon {
+    font-size: 24px; /* Adjust icon size */
+  }
+
+  .option-card h3 {
+    font-size: 16px; /* Adjust heading size in cards */
+  }
+
+  .profile-form-container {
+    padding: 15px; /* Reduce padding on mobile */
+  }
+
+  .profile-heading {
+    font-size: 20px; /* Smaller heading size */
+  }
+
+  .profile-input {
+    padding: 10px 12px; /* Adjust padding for input fields */
+  }
+
+  .profile-button,
+  .back-button {
+    padding: 10px;
+    font-size: 14px; /* Reduce button font size */
+  }
+}

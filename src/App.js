@@ -14,6 +14,7 @@ import AuthOptions from "./components/AuthOptions/AuthOptions.jsx";
 import BusinessEmailForm from "./components/BusinessEmailForm/BusinessEmailForm.jsx";
 import Campaign from "./components/Dashboard/Campaign/Campaign.jsx";
 import config from "./config";
+import ProfileSetting from "./components/ProfileSetting/ProfileSetting.jsx";
 const App = () => {
   const { token } = useAuth();
   const [groups, setGroups] = useState([]);
@@ -57,7 +58,7 @@ const App = () => {
             path="create-campaign"
             element={<CardRow groups={groups} setGroups={setGroups} />}
           />
-
+          <Route path="Profilesetting" element={<ProfileSetting />} />
           <Route
             path="groups"
             element={

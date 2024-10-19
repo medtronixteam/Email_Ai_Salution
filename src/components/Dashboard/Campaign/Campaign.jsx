@@ -259,6 +259,15 @@ const Campaign = () => {
                       </tr>
                     </thead>
                     <tbody>
+                      {campaigns.length === 0 && (
+                        <tr>
+                          <td
+                            colSpan="4"
+                            style={{ textAlign: "center", padding: "20px" }}>
+                            No campaigns found.
+                          </td>
+                        </tr>
+                      )}
                       {(campaigns || []).map((campaign) => (
                         <tr key={campaign.id}>
                           <td className="table-cell">{campaign.name}</td>
@@ -297,7 +306,7 @@ const Campaign = () => {
                                 Edit
                               </button>
                             )}
-                            {campaign.status !== "completed" && (
+                            {campaign.status !== "started" && (
                               <button
                                 className="delete-button"
                                 onClick={() => deleteCampaign(campaign.id)}>
