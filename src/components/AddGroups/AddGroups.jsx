@@ -272,7 +272,8 @@ const AddGroups = ({ groups, setGroups }) => {
             <Button
               variant="secondary"
               onClick={handleBackToGroups}
-              className="back-button">
+              className="back-button"
+              style={{ width: "auto", padding: "10px" }}>
               Back to Groups
             </Button>
           </Card.Body>
