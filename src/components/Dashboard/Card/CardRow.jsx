@@ -62,7 +62,7 @@ const CardRow = () => {
         if (data.data && data.data.length > 0) {
           setGroups(data.data);
         } else {
-          toast.info("No groups available.");
+          // toast.info("No groups available.");
         }
       } catch (error) {
         console.error("Error during API call:", error);

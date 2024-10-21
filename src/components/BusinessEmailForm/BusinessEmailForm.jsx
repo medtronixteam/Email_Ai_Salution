@@ -4,11 +4,12 @@ import "react-toastify/dist/ReactToastify.css";
 import "./BusinessEmailForm.css";
 import { useAuth } from "../../contexts/AuthProvider";
 import config from "../../config";
+
 const BusinessEmailForm = () => {
   const { token } = useAuth();
   const [formData, setFormData] = useState({
-    main_mailer: "Mail",
-    main_host: "smtp@gmail.com",
+    main_mailer: "Email",
+    main_host: "",
     main_port: "587",
     main_username: "",
     main_password: "",
@@ -18,14 +19,14 @@ const BusinessEmailForm = () => {
   });
 
   const handleInputChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+
       main_from_address:
-        e.target.name === "main_username"
-          ? e.target.value
-          : formData.main_from_address,
-    });
+        name === "main_username" ? value : prevState.main_from_address,
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -48,20 +49,18 @@ const BusinessEmailForm = () => {
 
       if (response.status === 200) {
         setFormData({
-          main_mailer: "Mail",
-          main_host: "smtp@gmail.com",
+          main_mailer: "Email",
+          main_host: "",
           main_port: "587",
           main_username: "",
           main_password: "",
-          main_encryption: "TLS",
+          main_encryption: "SSL",
           main_from_address: "",
           main_from_name: "",
         });
 
-        // Show success toast with message from the API response
         toast.success(data.message || "Email settings saved successfully!");
       } else {
-        // Show error toast with message from the API response
         toast.error(
           data.message || "Failed to save email settings. Please try again."
         );
@@ -79,7 +78,7 @@ const BusinessEmailForm = () => {
       <div className="container email-form-containers">
         <div className="row">
           <div
-            className="col-md-6 email-form-container "
+            className="col-md-6 email-form-container"
             style={{ color: "white" }}>
             <h3>Instructions</h3>
             <ul>
@@ -100,6 +99,7 @@ const BusinessEmailForm = () => {
                   id="main_mailer"
                   name="main_mailer"
                   value={formData.main_mailer}
+                  onChange={handleInputChange}
                   readOnly
                 />
               </div>
@@ -110,7 +110,7 @@ const BusinessEmailForm = () => {
                   id="main_host"
                   name="main_host"
                   value={formData.main_host}
-                  readOnly
+                  onChange={handleInputChange}
                 />
               </div>
               <div className="form-group">
@@ -120,6 +120,7 @@ const BusinessEmailForm = () => {
                   id="main_port"
                   name="main_port"
                   value={formData.main_port}
+                  onChange={handleInputChange}
                   readOnly
                 />
               </div>
@@ -150,6 +151,7 @@ const BusinessEmailForm = () => {
                   id="main_encryption"
                   name="main_encryption"
                   value={formData.main_encryption}
+                  onChange={handleInputChange}
                   readOnly
                 />
               </div>

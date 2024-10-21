@@ -15,6 +15,7 @@ import BusinessEmailForm from "./components/BusinessEmailForm/BusinessEmailForm.
 import Campaign from "./components/Dashboard/Campaign/Campaign.jsx";
 import config from "./config";
 import ProfileSetting from "./components/ProfileSetting/ProfileSetting.jsx";
+import NotFound from "./components/NotFound/NotFound.jsx";
 const App = () => {
   const { token } = useAuth();
   const [groups, setGroups] = useState([]);
@@ -49,6 +50,8 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="*" element={<NotFound />} />
+
         <Route path="/login" element={<Login />} />
         {/* <Route path="/signup" element={<SignUp />} /> */}
         <Route

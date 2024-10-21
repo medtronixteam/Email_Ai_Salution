@@ -35,7 +35,6 @@ const Login = () => {
         toast.success("Login successful!");
 
         login(data.token);
-
         navigate("/dashboard/setting");
       } else {
         const data = await response.json();

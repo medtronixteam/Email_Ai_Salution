@@ -1,5 +1,5 @@
 import React from "react";
-import heroImage from "../../image/Frame.png";
+import heroImage from "../../image/Frame.jpg";
 import "./HeroSection.css";
 const HeroSection = () => {
   return (
