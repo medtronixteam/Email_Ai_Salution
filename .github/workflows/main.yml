@@ -13,26 +13,20 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Install expect
-      run: sudo apt-get install -y expect
-
-    - name: SSH into server and run commands using password
+    - name: SSH into server and run commands using SSH key
+      env:
+        SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        SERVER_IP: ${{ secrets.SERVER_IP }}
       run: |
-        expect <<EOF
-        set timeout -1
-        spawn ssh -o StrictHostKeyChecking=no root@${{ secrets.SERVER_IP }}
-        expect "password:"
-        send "${{ secrets.SSH_PASSWORD }}\r"
-        expect "#"
-        send "cd /root/11_email_ai/Email_Ai_Salution\r"
-        expect "#"
-        send "git pull origin main\r"
-        expect "#"
-        send "cd ..\r"
-        expect "#"
-        send "docker compose build frontend\r"
-        expect "#"
-        send "docker compose up frontend -d\r"
-        expect "#"
-        send "exit\r"
+        echo "$SSH_KEY" > /tmp/deploy_key
+        chmod 600 /tmp/deploy_key
+        ssh -i /tmp/deploy_key -o StrictHostKeyChecking=no contact@$SERVER_IP <<EOF
+          cd /home/contact/Email_Ai_Salution
+          git pull origin main
+          cd ..
+          sudo docker compose build frontend
+          sudo docker compose up frontend -d
+          exit
         EOF
+    - name: Clean up SSH key
+      run: rm /tmp/deploy_key
