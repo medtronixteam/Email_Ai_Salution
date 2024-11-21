@@ -48,7 +48,7 @@ const AddGroups = ({ groups, setGroups }) => {
   const handleSaveGroup = async () => {
     if (!groupName || (useFileInput && !fileInput)) {
       setTimeout(() => {
-        toast.error("Please provide a group name and a file if uploading.");
+        // toast.error("Please provide a group name and a file if uploading.");
       }, 100);
       return;
     }
@@ -90,16 +90,16 @@ const AddGroups = ({ groups, setGroups }) => {
           setGroups(updatedGroups);
         }
         setTimeout(() => {
-          toast.success("Group created/updated successfully!");
+          // toast.success("Group created/updated successfully!");
         }, 100);
       } else {
         setTimeout(() => {
-          toast.error(data.message || "Failed to add users.");
+          // toast.error(data.message || "Failed to add users.");
         }, 100);
       }
     } catch (error) {
       setTimeout(() => {
-        toast.error("An error occurred. Please try again.");
+        // toast.error("An error occurred. Please try again.");
       }, 100);
     } finally {
       setLoading(false);
@@ -125,12 +125,12 @@ const AddGroups = ({ groups, setGroups }) => {
         setViewingGroup(group);
       } else {
         setTimeout(() => {
-          toast.error("Failed to fetch users.");
+          // toast.error("Failed to fetch users.");
         }, 100);
       }
     } catch (error) {
       setTimeout(() => {
-        toast.error("An error occurred while fetching users.");
+        // toast.error("An error occurred while fetching users.");
       }, 100);
     } finally {
       setLoading(false);
@@ -158,17 +158,17 @@ const AddGroups = ({ groups, setGroups }) => {
           prevGroups.filter((group) => group.id !== groupId)
         );
         setTimeout(() => {
-          toast.success("Group deleted successfully.");
+          // toast.success("Group deleted successfully.");
         }, 100);
       } else {
         const data = await response.json();
         setTimeout(() => {
-          toast.error(data.message || "Failed to delete group.");
+          // toast.error(data.message || "Failed to delete group.");
         }, 100);
       }
     } catch (error) {
       setTimeout(() => {
-        toast.error("An error occurred. Please try again.");
+        // toast.error("An error occurred. Please try again.");
       }, 100);
     } finally {
       setLoading(false);
