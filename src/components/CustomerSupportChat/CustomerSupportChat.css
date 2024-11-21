@@ -1,0 +1,296 @@
+/* Main container styling */
+.customer-support {
+  width: 95%;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #f4f7fa;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.customer-support h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: bold;
+}
+.ticket-title {
+  text-align: center !important;
+  color: #333;
+  margin: 10px;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.generate-ticket-button {
+  color: #000000;
+  cursor: pointer;
+  float: right;
+  margin-bottom: 10px;
+  font-weight: 700;
+  transition: background-color 0.3s ease;
+  border-bottom: 3px solid #000000;
+}
+
+/* .generate-ticket-button:hover {
+  background-color: #1d074e;
+} */
+
+.new-ticket-form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.new-ticket-form input,
+.new-ticket-form textarea {
+  margin: 10px 0;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.new-ticket-form input:focus,
+.new-ticket-form textarea:focus {
+  border-color: #6746af;
+  box-shadow: 0 0 5px rgba(103, 70, 175, 0.2);
+}
+
+.new-ticket-form button {
+  padding: 12px;
+  background-color: #6746af;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.new-ticket-form button:hover {
+  background-color: #21143e;
+}
+
+.cancel-button {
+  background-color: #ff0000;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.cancel-button:hover {
+  background-color: #cc0000;
+}
+
+.ticket-table {
+  margin-top: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+th {
+  background-color: #6746af;
+  color: white;
+}
+
+td {
+  background-color: #ffffff;
+}
+
+td button {
+  padding: 5px 10px;
+  background-color: black;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+}
+
+td button:hover {
+  background-color: rgb(58, 57, 57);
+}
+
+/* Chat box styling */
+.chat-box {
+  margin-top: 20px;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  max-height: 400px;
+  overflow-y: auto;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Chat messages styling */
+.chat-messages {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Spacing between messages */
+}
+
+.chat-message {
+  display: flex;
+  align-items: center;
+  max-width: 80%;
+}
+
+.user-message {
+  margin-left: auto; /* Push user messages to the right */
+  flex-direction: row-reverse; /* Icon on the right side */
+}
+
+.user-message .chat-text {
+  background-color: #d1e7dd;
+  color: #0f5132;
+  padding: 10px 15px;
+  border-radius: 15px 15px 0 15px;
+  border: 1px solid #badbcc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.admin-message {
+  margin-right: auto; /* Push admin messages to the left */
+}
+
+.admin-message .chat-text {
+  background-color: #f8d7da;
+  color: #842029;
+  padding: 10px 15px;
+  border-radius: 15px 15px 15px 0;
+  border: 1px solid #f5c2c7;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.back-button {
+  margin: 30px 0;
+}
+.chat-icon {
+  font-size: 20px;
+  margin: 0 10px;
+}
+
+.user-message .chat-icon {
+  color: #0f5132;
+}
+
+.admin-message .chat-icon {
+  color: #842029;
+}
+
+.chat-input-form {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+}
+
+.chat-input-form input {
+  flex-grow: 1;
+  padding: 12px;
+  border-radius: 25px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.chat-input-form input:focus {
+  border-color: #6746af;
+  box-shadow: 0 0 5px rgba(103, 70, 175, 0.2);
+}
+
+.chat-input-form button {
+  margin-left: 10px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.chat-input-form button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.chat-input-form button:active {
+  transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .customer-support {
+    padding: 10px;
+  }
+
+  .generate-ticket-button {
+    float: none;
+    margin: 10px 0;
+  }
+
+  .new-ticket-form input,
+  .new-ticket-form textarea {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  th,
+  td {
+    padding: 8px;
+  }
+
+  .chat-messages {
+    max-height: 300px;
+  }
+
+  .user-message .chat-text,
+  .admin-message .chat-text {
+    font-size: 13px;
+    padding: 8px 12px;
+  }
+}
+
+@media (max-width: 576px) {
+  .cancel-button,
+  .generate-ticket-button {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  .new-ticket-form button,
+  .chat-input-form button {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .chat-messages {
+    max-height: 200px;
+  }
+
+  .user-message .chat-text,
+  .admin-message .chat-text {
+    max-width: 80%;
+    font-size: 12px;
+  }
+}

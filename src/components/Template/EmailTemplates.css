@@ -1,0 +1,464 @@
+.email-template {
+  padding: 20px;
+  max-width: 900px;
+  margin: 30px auto;
+  border-radius: 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.tabs {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tab {
+  width: 49%;
+  padding: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: #ffffff;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.tab.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.html-layout input,
+.text-layout input,
+.text-layout textarea,
+.html-layout textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: black;
+  background-color: #f9f9f9;
+}
+
+.ql-container {
+  border-radius: 5px;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.ql-editor {
+  min-height: 150px;
+  padding: 10px;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* Preview and Editor Sections */
+.editor-preview {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.html-editor,
+.html-preview {
+  width: 100%;
+}
+
+.html-preview {
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.preview-content {
+  padding: 10px;
+  min-height: 150px;
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: scroll;
+  word-wrap: break-word;
+}
+
+/* Sample Section */
+.samples {
+  margin-top: 20px;
+}
+
+.samples h3 {
+  font-weight: bold;
+  text-align: left;
+}
+
+.sample-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.sample-item {
+  background-color: #333;
+  color: #f1f1f1;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: left;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.sample-item h4 {
+  font-weight: bold;
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+
+.sample-view {
+  width: 100%;
+  height: 100px;
+  border: none;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.submit-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 20px;
+}
+
+.submit-btn:hover {
+  background-color: #0056b3;
+}
+
+.sample-editor {
+  /* background-color: #ffffff; */
+  width: 100%;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 900px;
+  margin: 30px auto;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.back-btn {
+  background-color: #6c757d;
+  width: 100%;
+  color: white;
+  padding: 8px 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  align-self: flex-start;
+}
+
+/* Subtitle and Textarea */
+.sample-editor h3 {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.sample-editor input[type="text"],
+.sample-editor textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+/* .editor-columns {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+} */
+
+.preview-column,
+.edit-column {
+  width: 100%;
+}
+.preview-column h4 {
+  font-weight: bold;
+  color: white;
+  margin-bottom: 15px;
+}
+
+/* Preview Box */
+.preview {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 15px;
+  min-height: 250px;
+  max-height: 300px;
+  overflow-y: auto;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.style-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 20px 0;
+}
+
+.style-controls label {
+  font-size: 0.9rem;
+  color: #333;
+  font-weight: bold;
+}
+
+.style-controls input[type="color"],
+.style-controls select {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.bg-toggle-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  margin-top: 10px;
+}
+
+.submit-btn {
+  width: 100%;
+  background-color: #fafefb;
+  color: rgb(0, 0, 0);
+  padding: 10px 25px;
+  border: none;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  align-self: center;
+  margin-top: 20px;
+}
+
+.submit-btn:hover {
+  background-color: #545454;
+}
+/* new code */
+.pdf-icon {
+  background: none;
+  color: white;
+  font-size: 35px;
+  cursor: pointer;
+  float: right;
+}
+.pdf-icon:hover {
+  background: none;
+}
+
+.modal2 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  width: 80%;
+  border-radius: 8px;
+  position: relative;
+}
+
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.modal-tabs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  margin: 10px auto;
+  width: 80%;
+}
+
+.modal-tab {
+  flex: 1;
+  padding: 10px;
+  margin: 0 10px;
+  text-align: center;
+  background-color: #dedcdc;
+  color: rgb(0, 0, 0);
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.modal-tab.active {
+  background-color: #5d0c88;
+  font-weight: bold;
+  color: white;
+}
+
+.modal-body {
+  padding: 10px 0;
+}
+/* Media Queries */
+@media (max-width: 768px) {
+  .email-template {
+    padding: 10px;
+    max-width: 100%;
+    margin: 10px auto;
+    border-radius: 8px;
+  }
+
+  .tabs {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .tab {
+    width: 100%;
+  }
+
+  .editor-preview {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .html-editor,
+  .html-preview {
+    width: 100%;
+  }
+
+  .sample-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  }
+
+  .sample-item {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .submit-btn {
+    padding: 8px 20px;
+    font-size: 0.9rem;
+  }
+
+  .modal-content {
+    width: 90%;
+    padding: 15px;
+  }
+
+  .modal-tabs {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .modal-tab {
+    margin: 5px 0;
+  }
+
+  .ql-editor {
+    min-height: 100px;
+  }
+
+  .preview {
+    min-height: 200px;
+    max-height: 250px;
+  }
+
+  .style-controls {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .pdf-icon {
+    font-size: 25px;
+  }
+}
+
+@media (max-width: 480px) {
+  .email-template {
+    padding: 5px;
+    border-radius: 5px;
+  }
+
+  .tabs {
+    gap: 3px;
+  }
+
+  .tab {
+    padding: 8px;
+  }
+
+  .sample-item {
+    font-size: 0.8rem;
+    padding: 6px;
+  }
+
+  .submit-btn {
+    padding: 6px 15px;
+    font-size: 0.8rem;
+  }
+
+  .modal-content {
+    width: 95%;
+    padding: 10px;
+  }
+
+  .modal-tabs {
+    margin: 5px auto;
+  }
+
+  .ql-editor {
+    min-height: 80px;
+  }
+
+  .preview {
+    min-height: 150px;
+  }
+
+  .pdf-icon {
+    font-size: 20px;
+  }
+}

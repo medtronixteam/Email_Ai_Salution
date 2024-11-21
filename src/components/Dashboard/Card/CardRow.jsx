@@ -16,11 +16,15 @@ import "react-quill/dist/quill.snow.css";
 import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
 import "./CardRow.css";
+import { FaFilePdf } from "react-icons/fa";
 import config from "../../../config.js";
 const CardRow = () => {
   const { token } = useAuth();
   const [step, setStep] = useState(1);
   const [groups, setGroups] = useState([]);
+  // const [showPdfModal, setShowPdfModal] = useState(false); // For PDF modal
+  const [selectedFileIds, setSelectedFileIds] = useState([]);
+
   const [formData, setFormData] = useState({
     campaignName: "",
     selectedGroupId: "",
@@ -33,13 +37,24 @@ const CardRow = () => {
     mailType: "",
     gmailOptions: [],
     subject: "",
+    selectedFileIds: [],
   });
+
   const [editorContent, setEditorContent] = useState("");
-  const [showModal, setShowModal] = useState(false);
+  const [showGroupModal, setShowGroupModal] = useState(false); // For group modal
+  const [showPdfModal, setShowPdfModal] = useState(false); // For PDF modal
+
   const [showError, setShowError] = useState(false);
   const [useFileInput, setUseFileInput] = useState(false);
   const [validationError, setValidationError] = useState({});
   const baseUrl = config.baseUrl;
+  const [activeTab, setActiveTab] = useState("text");
+  const [textMessage, setTextMessage] = useState("");
+  const [htmlMessage, setHtmlMessage] = useState("");
+  // const [showModal, setShowModal] = useState(false);
+  const [modalTab, setModalTab] = useState("recent");
+  const [recentFiles, setRecentFiles] = useState([]);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const fetchGroups = async () => {
       try {
@@ -66,7 +81,7 @@ const CardRow = () => {
         }
       } catch (error) {
         console.error("Error during API call:", error);
-        toast.error("Failed to fetch groups. Please try again.");
+        // toast.error("Failed to fetch groups. Please try again.");
       }
     };
 
@@ -74,6 +89,120 @@ const CardRow = () => {
       fetchGroups();
     }
   }, [token]);
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+  };
+
+  const fetchRecentFiles = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(`${baseUrl}/api/attachments`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await response.json();
+      if (data.attachments) {
+        const formattedFiles = data.attachments.map((attachment) => ({
+          id: attachment.id,
+          name: attachment.file_name,
+          url: `${baseUrl}/storage/attachments/${attachment.file_name}`,
+        }));
+        setRecentFiles(formattedFiles);
+      } else {
+        setRecentFiles([]);
+      }
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching recent files:", error);
+      // toast.error("Failed to fetch recent files.");
+      setLoading(false);
+    }
+  };
+  const handleSubmitSelectedFiles = () => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      selectedFileIds: selectedFileIds, // Update selected file IDs in form data
+    }));
+    setShowPdfModal(false); // Close the modal
+    console.log("Selected File IDs Submitted:", selectedFileIds);
+  };
+
+  const openModal = () => {
+    setShowPdfModal(true);
+    fetchRecentFiles();
+  };
+
+  const handleFileChange = (e) => {
+    const files = Array.from(e.target.files);
+    console.log("Selected files:", files);
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      fileInput: files,
+    }));
+  };
+  const handleFileSelect = (fileId) => {
+    setSelectedFileIds((prevSelectedFileIds) => {
+      if (prevSelectedFileIds.includes(fileId)) {
+        // If already selected, remove it
+        return prevSelectedFileIds.filter((id) => id !== fileId);
+      } else {
+        // Otherwise, add it
+        return [...prevSelectedFileIds, fileId];
+      }
+    });
+  };
+
+  const handleFileUpload = async () => {
+    const files = formData.fileInput;
+
+    if (!files || files.length === 0) {
+      console.error("No files selected for upload");
+      // toast.error("Please select files to upload.");
+      return;
+    }
+
+    const formDataToSend = new FormData();
+
+    const fileArray = files.map((file) => file.name);
+
+    formDataToSend.append("file_name", JSON.stringify(fileArray));
+
+    files.forEach((file) => {
+      formDataToSend.append("file_name", file);
+    });
+
+    try {
+      const response = await fetch(`${baseUrl}/api/attachments`, {
+        method: "POST",
+        body: formDataToSend,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Files uploaded successfully:", data);
+        // toast.success("Files uploaded successfully!");
+      } else {
+        const errorData = await response.json();
+        console.error("Upload failed:", errorData);
+        // toast.error(
+        //   `File upload failed: ${errorData.message || "Unknown error"}`
+        // );
+      }
+    } catch (error) {
+      console.error("Error during file upload:", error);
+      // toast.error("An error occurred while uploading the files.");
+    }
+  };
+
+  const closeModal = () => {
+    setShowPdfModal(false);
+  };
 
   const handleNext = async () => {
     if (validateStep()) {
@@ -84,14 +213,29 @@ const CardRow = () => {
         const isSuccessful = await handleSubmit();
         if (isSuccessful) {
           setStep(6);
-          toast.success("Campaign created successfully!");
+          // toast.success("Campaign created successfully!");
         } else {
-          toast.error("Campaign creation failed. Please try again.");
+          // toast.error("Campaign creation failed. Please try again.");
         }
       }
     } else {
       setShowError(true);
     }
+  };
+  const openGroupModal = () => {
+    setShowGroupModal(true);
+  };
+
+  const closeGroupModal = () => {
+    setShowGroupModal(false);
+  };
+  const openPdfModal = () => {
+    setShowPdfModal(true);
+    fetchRecentFiles(); // Ensure recent files are fetched when the modal opens
+  };
+
+  const closePdfModal = () => {
+    setShowPdfModal(false);
   };
 
   const handleBack = () => {
@@ -102,7 +246,7 @@ const CardRow = () => {
 
   const validateStep = () => {
     if (step === 1 && formData.campaignName.trim() === "") {
-      toast.error("Please enter a campaign name.");
+      // toast.error("Please enter a campaign name.");
       return false;
     }
     if (
@@ -110,7 +254,7 @@ const CardRow = () => {
       (formData.selectedGroupId.trim() === "" ||
         formData.selectedGroupName.trim() === "")
     ) {
-      toast.error("Please select a group.");
+      // toast.error("Please select a group.");
       return false;
     }
     if (
@@ -118,15 +262,15 @@ const CardRow = () => {
       (formData.campaignDate.trim() === "" ||
         formData.campaignTime.trim() === "")
     ) {
-      toast.error("Please enter both date and time.");
+      // toast.error("Please enter both date and time.");
       return false;
     }
     if (step === 4 && formData.mailType === "") {
-      toast.error("Please select a mail type.");
+      // toast.error("Please select a mail type.");
       return false;
     }
     if (step === 5 && editorContent.trim() === "") {
-      toast.error("Please enter mail content.");
+      // toast.error("Please enter mail content.");
       return false;
     }
     return true;
@@ -149,13 +293,6 @@ const CardRow = () => {
       ...formData,
       selectedGroupId,
       selectedGroupName,
-    });
-  };
-
-  const handleFileChange = (e) => {
-    setFormData({
-      ...formData,
-      fileInput: e.target.files[0],
     });
   };
 
@@ -200,66 +337,100 @@ const CardRow = () => {
   const handleSubmit = async () => {
     if (!token) {
       console.error("Token is not available!");
-      toast.error("Authentication error. Please log in again.");
+      // toast.error("Authentication error. Please log in again.");
       return false;
     }
 
     const formDataToSend = new FormData();
 
-    formDataToSend.append("name", formData.campaignName);
-    formDataToSend.append("group_id", formData.selectedGroupId);
-    formDataToSend.append("campaign_date", formData.campaignDate);
-    formDataToSend.append("campaign_time", formData.campaignTime);
-    formDataToSend.append("subject", formData.subject);
-
-    if (formData.mailType === "gmail_auth") {
-      formDataToSend.append("email_host", "gmail_auth");
-      formDataToSend.append(
-        "gmail_password",
-        formData.gmailOptions.includes("App Password") ? "App Password" : ""
-      );
-    } else if (formData.mailType === "business") {
-      formDataToSend.append("email_host", "email");
-      formDataToSend.append("business_email", formData.subject);
-    } else if (formData.mailType === "gmail_appPassword") {
-      formDataToSend.append("email_host", "gmail_password");
-      formDataToSend.append("business_email", formData.subject);
-    } else {
-      toast.error("Please select a valid mail type.");
-      return false;
-    }
-
-    const plainTextMessage = stripHtmlTags(editorContent);
-
-    formDataToSend.append("message", plainTextMessage);
-
-    if (formData.fileInput) {
-      formDataToSend.append("file", formData.fileInput);
-    }
-    const baseUrl = config.baseUrl;
     try {
+      formDataToSend.append("name", formData.campaignName);
+      formDataToSend.append("group_id", formData.selectedGroupId);
+      formDataToSend.append("campaign_date", formData.campaignDate);
+      formDataToSend.append("campaign_time", formData.campaignTime);
+      formDataToSend.append("subject", formData.subject);
+      formDataToSend.append("message", editorContent);
+
+      if (formData.selectedFileIds && formData.selectedFileIds.length > 0) {
+        formDataToSend.append(
+          "attachments",
+          JSON.stringify(formData.selectedFileIds)
+        );
+      }
+
+      if (formData.mailType === "gmail_auth") {
+        formDataToSend.append("email_host", "gmail_auth");
+        formDataToSend.append(
+          "gmail_password",
+          formData.gmailOptions.includes("App Password") ? "App Password" : ""
+        );
+      } else if (formData.mailType === "business") {
+        formDataToSend.append("email_host", "email");
+        formDataToSend.append("business_email", formData.subject);
+      } else if (formData.mailType === "gmail_appPassword") {
+        formDataToSend.append("email_host", "gmail_password");
+        formDataToSend.append("business_email", formData.subject);
+      } else {
+        // toast.error("Please select a valid mail type.");
+        return false;
+      }
+
+      // **Step 4: Validation**
+      if (!formData.campaignName.trim()) {
+        // toast.error("Campaign Name is required!");
+        return false;
+      }
+      if (!formData.selectedGroupId.trim()) {
+        // toast.error("Please select a group!");
+        return false;
+      }
+      if (!formData.campaignDate.trim()) {
+        // toast.error("Please provide a campaign date!");
+        return false;
+      }
+      if (!formData.campaignTime.trim()) {
+        // toast.error("Please provide a campaign time!");
+        return false;
+      }
+      if (!formData.subject.trim()) {
+        // toast.error("Subject is required!");
+        return false;
+      }
+      if (!editorContent.trim()) {
+        // toast.error("Message content is required!");
+        return false;
+      }
+
+      // **Step 5: Submit API call**
       const response = await fetch(`${baseUrl}/api/campaign`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        body: formDataToSend,
+        body: formDataToSend, // Send FormData as body
       });
 
-      if (response.status === 200) {
+      if (response.ok) {
         const data = await response.json();
+        console.log("Campaign created successfully:", data);
+        // toast.success("Campaign created successfully!");
         return true;
       } else {
         const errorData = await response.json();
-        toast.error("Failed to create campaign: " + errorData.message);
+        console.error("API Error:", errorData);
+        // toast.error("Failed to create campaign: " + errorData.message);
         return false;
       }
     } catch (error) {
       console.error("Error while creating campaign:", error);
-      toast.error("An error occurred. Please try again.");
+      // toast.error("An error occurred. Please try again.");
       return false;
     }
   };
+
+  useEffect(() => {
+    console.log("Selected File IDs:", selectedFileIds);
+  }, [selectedFileIds]);
 
   const handleCreateGroup = async () => {
     const groupData = new FormData();
@@ -295,22 +466,22 @@ const CardRow = () => {
             selectedGroupId: newGroup.id.toString(),
             selectedGroupName: newGroup.name,
           });
+          setShowGroupModal(false);
 
-          setShowModal(false);
-          toast.success("Group created successfully!");
+          // toast.success("Group created successfully!");
         } else {
-          toast.error(
-            "Group creation succeeded but response format was unexpected."
-          );
+          // toast.error(
+          //   "Group creation succeeded but response format was unexpected."
+          // );
         }
       } else {
         const errorData = await response.json();
-        toast.error("Failed to create group: " + errorData.message);
+        // toast.error("Failed to create group: " + errorData.message);
       }
     } catch (error) {
-      toast.error(
-        "An error occurred while creating the group. Please try again."
-      );
+      // toast.error(
+      //   "An error occurred while creating the group. Please try again."
+      // );
     }
   };
 
@@ -378,11 +549,12 @@ const CardRow = () => {
                   Please select a group.
                 </Form.Control.Feedback>
                 <button
-                  onClick={() => setShowModal(true)}
+                  onClick={openGroupModal}
                   className="btn btn-link mt-3 create-group-link"
                   style={{ color: "black", fontWeight: "bold" }}>
                   Create a new group
                 </button>
+
                 <button onClick={handleNext} className="btn btn-next">
                   Next
                 </button>
@@ -457,7 +629,6 @@ const CardRow = () => {
                   checked={formData.mailType === "gmail_appPassword"}
                   onChange={handleMailTypeChange}
                 />
-
                 <button onClick={handleNext} className="btn btn-next mt-3">
                   Next
                 </button>
@@ -473,22 +644,176 @@ const CardRow = () => {
           <CSSTransition key="step5" timeout={500} classNames="slide">
             <div className="card-custom">
               <div className="card-body">
-                <h5 className="card-title">Mail Content</h5>
-                <Form.Control
-                  type="text"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  placeholder="Enter Email Subject"
-                  className="mb-3"
-                />
-                <ReactQuill
-                  theme="snow"
-                  value={editorContent}
-                  onChange={setEditorContent}
-                  placeholder="Type your content here..."
-                  spellCheck={true}
-                />
+                <div className="email-template">
+                  <ToastContainer />
+                  <div className="tabs">
+                    <button
+                      className={`tab ${activeTab === "text" ? "active" : ""}`}
+                      onClick={() => handleTabClick("text")}>
+                      Text
+                    </button>
+                    <button
+                      className={`tab ${activeTab === "html" ? "active" : ""}`}
+                      onClick={() => handleTabClick("html")}>
+                      HTML
+                    </button>
+                  </div>
+                  <div className="content">
+                    {activeTab === "text" ? (
+                      <div className="text-layout">
+                        {/* Bind Subject Input */}
+                        <input
+                          type="text"
+                          placeholder="Subject...."
+                          name="subject"
+                          value={formData.subject} // Bind to formData
+                          onChange={handleChange} // Use handleChange for formData updates
+                          required
+                          className={`form-control ${
+                            showError && !formData.subject.trim()
+                              ? "is-invalid"
+                              : ""
+                          }`}
+                        />
+                        {showError && !formData.subject.trim() && (
+                          <div className="invalid-feedback">
+                            Please provide a subject.
+                          </div>
+                        )}
+
+                        {/* Bind ReactQuill for Message */}
+                        <ReactQuill
+                          value={editorContent}
+                          onChange={setEditorContent}
+                          placeholder="Message....."
+                          modules={{
+                            toolbar: [
+                              [{ header: [1, 2, false] }],
+                              ["bold", "italic", "underline", "strike"],
+                              [{ list: "ordered" }, { list: "bullet" }],
+                              ["link", "image"],
+                              ["clean"],
+                              ["code-block"],
+                            ],
+                          }}
+                        />
+                        {showError && !editorContent.trim() && (
+                          <div className="text-danger mt-2">
+                            Please provide a message content.
+                          </div>
+                        )}
+
+                        {/* PDF Upload */}
+                        <button className="pdf-icon" onClick={openPdfModal}>
+                          <FaFilePdf style={{ color: "black" }} />
+                        </button>
+
+                        {/* Modal for PDF */}
+                        {showPdfModal && (
+                          <div className="modal2 overlay">
+                            <div className="modal-content modal-large">
+                              <button
+                                className="close-modal"
+                                onClick={closePdfModal}>
+                                &times;
+                              </button>
+                              <div className="modal-tabs">
+                                <button
+                                  className={`modal-tab ${
+                                    modalTab === "recent" ? "active" : ""
+                                  }`}
+                                  onClick={() => setModalTab("recent")}>
+                                  Recent PDFs
+                                </button>
+                                <button
+                                  className={`modal-tab ${
+                                    modalTab === "upload" ? "active" : ""
+                                  }`}
+                                  onClick={() => setModalTab("upload")}>
+                                  Select from Computer
+                                </button>
+                              </div>
+                              <div className="modal-body">
+                                {modalTab === "recent" ? (
+                                  <div className="recent-pdfs">
+                                    {recentFiles.length > 0 ? (
+                                      recentFiles.map((file) => (
+                                        <div
+                                          key={file.id}
+                                          className={`recent-pdf-item ${
+                                            selectedFileIds.includes(file.id)
+                                              ? "selected"
+                                              : ""
+                                          }`}
+                                          onClick={() =>
+                                            handleFileSelect(file.id)
+                                          }>
+                                          <FaFilePdf className="recent-pdf-item-icon" />
+                                          {file.name}
+                                        </div>
+                                      ))
+                                    ) : (
+                                      <p>No recent files found.</p>
+                                    )}
+                                    <button
+                                      onClick={handleSubmitSelectedFiles}
+                                      className="btn btn-primary  mt-3"
+                                      style={{ margin: "0 auto" }}>
+                                      Submit Selected Files
+                                    </button>
+                                  </div>
+                                ) : (
+                                  <div className="upload-pdf">
+                                    <input
+                                      type="file"
+                                      accept="application/pdf,image/*"
+                                      multiple
+                                      onChange={handleFileChange}
+                                    />
+                                    <button
+                                      onClick={handleFileUpload}
+                                      className="btn btn-primary">
+                                      Upload File
+                                    </button>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="html-layout">
+                        <div className="editor-preview">
+                          <div className="html-editor">
+                            <input
+                              type="text"
+                              placeholder="HTML Subject...."
+                              name="subject"
+                              value={formData.subject}
+                              onChange={handleChange}
+                            />
+                            <textarea
+                              value={htmlMessage}
+                              onChange={(e) => setHtmlMessage(e.target.value)}
+                              placeholder="HTML Message....."
+                              rows="10"
+                            />
+                          </div>
+
+                          <div className="html-preview">
+                            <h3>HTML Preview</h3>
+                            <div
+                              className="preview-content"
+                              dangerouslySetInnerHTML={{ __html: htmlMessage }}
+                            />
+                          </div>
+                        </div>
+                        {/* <button className="submit-btn">Submit</button> */}
+                      </div>
+                    )}
+                  </div>
+                </div>
                 <button onClick={handleNext} className="btn btn-next mt-3">
                   Next
                 </button>
@@ -514,8 +839,8 @@ const CardRow = () => {
       </TransitionGroup>
 
       <Modal
-        show={showModal}
-        onHide={() => setShowModal(false)}
+        show={showGroupModal}
+        onHide={closeGroupModal}
         className="modal-unique"
         style={{ backgroundColor: "white", color: "black" }}>
         <Modal.Header closeButton>
@@ -620,7 +945,7 @@ const CardRow = () => {
           )}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
+          <Button variant="secondary" onClick={closeGroupModal}>
             Close
           </Button>
           <Button variant="primary" onClick={handleCreateGroup}>

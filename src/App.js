@@ -16,6 +16,9 @@ import Campaign from "./components/Dashboard/Campaign/Campaign.jsx";
 import config from "./config";
 import ProfileSetting from "./components/ProfileSetting/ProfileSetting.jsx";
 import NotFound from "./components/NotFound/NotFound.jsx";
+import EmailTemplates from "./components/Template/EmailTemplates.jsx";
+import CustomerSupport from "./components/CustomerSupportChat/CustomerSupportChat.jsx";
+import Subscription from "./components/Subscrption/Subscription.jsx";
 const App = () => {
   const { token } = useAuth();
   const [groups, setGroups] = useState([]);
@@ -50,8 +53,9 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="*" element={<NotFound />} />
 
+        <Route path="*" element={<NotFound />} />
+        <Route path="/email-templates" element={<EmailTemplates />} />
         <Route path="/login" element={<Login />} />
         {/* <Route path="/signup" element={<SignUp />} /> */}
         <Route
@@ -61,6 +65,8 @@ const App = () => {
             path="create-campaign"
             element={<CardRow groups={groups} setGroups={setGroups} />}
           />
+          <Route path="customer-support" element={<CustomerSupport />} />{" "}
+          <Route path="subscription" element={<Subscription/>} />
           <Route path="Profilesetting" element={<ProfileSetting />} />
           <Route
             path="groups"
@@ -70,7 +76,6 @@ const App = () => {
           />
           <Route path="campaign" element={<Campaign />} />
           <Route path="setting" element={<LinkEmailAccounts />} />
-
           <Route path="AuthOptions" element={<AuthOptions />} />
           <Route path="BusinessEmailForm" element={<BusinessEmailForm />} />
         </Route>

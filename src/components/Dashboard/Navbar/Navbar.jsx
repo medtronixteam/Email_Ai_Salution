@@ -17,7 +17,7 @@ const Navbar = () => {
     <header
       className="header"
       style={{ backgroundColor: "black", color: "white" }}>
-      <div className="container">
+      <div className="container-fluid">
         <nav className="navbar navbar-expand-lg navbar-custom">
           <div className="container-fluid">
             <Link className="navbar-brand text-white fw-bold" to="/">
@@ -53,9 +53,19 @@ const Navbar = () => {
                   </a>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link text-white" to="/dashboard/setting">
-                    Settings
+                  <Link
+                    className="nav-link text-white"
+                    to="/dashboard/subscription">
+                    Plans
                   </Link>
+                </li>
+
+                <li className="nav-item">
+                  <a
+                    className="nav-link text-white"
+                    href="/dashboard/customer-support">
+                    Customer-Support
+                  </a>
                 </li>
               </ul>
               <div
@@ -82,6 +92,12 @@ const Navbar = () => {
                         to="/dashboard/Profilesetting">
                         <FontAwesomeIcon icon={faCog} className="me-2" />{" "}
                         Profile Settings
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="dropdown-item" to="/dashboard/setting">
+                        <FontAwesomeIcon icon={faCog} className="me-2" />{" "}
+                        Account Settings
                       </Link>
                     </li>
                     <li>

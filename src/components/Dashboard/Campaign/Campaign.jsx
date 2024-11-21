@@ -43,7 +43,7 @@ const Campaign = () => {
       }
     } catch (error) {
       console.error("Error fetching campaigns:", error);
-      toast.error("Failed to fetch campaigns. Please try again.");
+      // toast.error("Failed to fetch campaigns. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -63,7 +63,7 @@ const Campaign = () => {
       }
     } catch (error) {
       console.error("Error fetching groups:", error);
-      toast.error("Failed to fetch groups.");
+      // toast.error("Failed to fetch groups.");
     } finally {
       setLoading(false);
     }
@@ -87,11 +87,11 @@ const Campaign = () => {
       });
       if (response.status === 200 && response.data.status === "success") {
         fetchCampaigns();
-        toast.success("Campaign started successfully.");
+        // toast.success("Campaign started successfully.");
       }
     } catch (error) {
       console.error("Error starting the campaign:", error);
-      toast.error("Failed to start the campaign. Please try again.");
+      // toast.error("Failed to start the campaign. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -108,11 +108,11 @@ const Campaign = () => {
       });
       if (response.status === 200 && response.data.status === "success") {
         fetchCampaigns();
-        toast.success("Campaign stopped successfully.");
+        // toast.success("Campaign stopped successfully.");
       }
     } catch (error) {
       console.error("Error stopping the campaign:", error);
-      toast.error("Failed to stop the campaign. Please try again.");
+      // toast.error("Failed to stop the campaign. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -128,12 +128,12 @@ const Campaign = () => {
         },
       });
       if (response.status === 200) {
-        toast.success("Campaign successfully deleted.");
+        // toast.success("Campaign successfully deleted.");
         fetchCampaigns();
       }
     } catch (error) {
       console.error("Error deleting the campaign:", error);
-      toast.error("Failed to delete the campaign. Please try again.");
+      // toast.error("Failed to delete the campaign. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -161,12 +161,12 @@ const Campaign = () => {
         }
       );
       if (response.status === 200) {
-        toast.success("Campaign data successfully submitted.");
+        // toast.success("Campaign data successfully submitted.");
         fetchCampaigns();
       }
     } catch (error) {
       console.error("Error submitting campaign data:", error);
-      toast.error("Failed to submit campaign. Please try again.");
+      // toast.error("Failed to submit campaign. Please try again.");
     } finally {
       setLoading(false);
     }
