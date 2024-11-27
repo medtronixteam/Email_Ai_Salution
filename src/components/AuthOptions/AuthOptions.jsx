@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./AuthOptions.css";
@@ -8,11 +8,6 @@ import config from "../../config";
 const AuthOptions = () => {
   const [showOtpForm, setShowOtpForm] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  const handleOtpClick = () => setShowOtpForm(true);
-  const handleBackClick = () => setShowOtpForm(false);
-
-  const { token } = useAuth();
   const [formData, setFormData] = useState({
     main_mailer: "smtp",
     main_host: "smtp.gmail.com",
@@ -23,6 +18,50 @@ const AuthOptions = () => {
     main_from_address: "",
     main_from_name: "",
   });
+
+  const { token } = useAuth();
+
+  // Fetch email settings on component mount
+  useEffect(() => {
+    const fetchEmailSettings = async () => {
+      const baseUrl = config.baseUrl;
+      try {
+        const response = await fetch(`${baseUrl}/api/email/gmail`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const data = await response.json();
+
+        if (response.status === 200 && data.status === "success") {
+          // Populate the form with the fetched data
+          setFormData({
+            main_mailer: data.data.main_mailer || "smtp",
+            main_host: data.data.main_host || "smtp.gmail.com",
+            main_port: data.data.main_port || "587",
+            main_username: data.data.main_username || "",
+            main_password: data.data.main_password || "",
+            main_encryption: data.data.main_encryption || "TLS",
+            main_from_address: data.data.main_from_address || "",
+            main_from_name: data.data.main_from_name || "",
+          });
+        } else {
+          // toast.error(data.message || "Failed to fetch email settings.");
+        }
+      } catch (error) {
+        console.error("Error fetching email settings:", error);
+        // toast.error("An error occurred while fetching email settings.");
+      }
+    };
+
+    fetchEmailSettings();
+  }, [token]);
+
+  const handleOtpClick = () => setShowOtpForm(true);
+  const handleBackClick = () => setShowOtpForm(false);
 
   const handleInputChange = (e) => {
     setFormData({
@@ -51,10 +90,9 @@ const AuthOptions = () => {
         }),
       });
 
-      const data = await response.json(); // Extract the response JSON
+      const data = await response.json();
 
       if (response.status === 200) {
-        // Reset form data
         setFormData({
           main_mailer: "smtp",
           main_host: "smtp.gmail.com",
@@ -66,16 +104,13 @@ const AuthOptions = () => {
           main_from_name: "",
         });
 
-        // Show success toast with message from the API
-        toast.success(data.message || "Email settings saved successfully!");
+        // toast.success(data.message || "Email settings saved successfully!");
       } else {
-        // Show error toast with message from the API
-        toast.error(data.message || "Failed to save email settings.");
+        // toast.error(data.message || "Failed to save email settings.");
       }
     } catch (error) {
       console.error("Error:", error);
-      // Show generic error toast
-      toast.error("An error occurred. Please try again.");
+      // toast.error("An error occurred. Please try again.");
     }
   };
 
@@ -100,14 +135,13 @@ const AuthOptions = () => {
           newWindow.focus();
         }
 
-        // Show success toast
-        toast.success("Google authentication started!");
+        // toast.success("Google authentication started!");
       } else {
-        toast.error("Failed to initiate Google authentication.");
+        // toast.error("Failed to initiate Google authentication.");
       }
     } catch (error) {
       console.error("Error fetching Google Auth URL:", error);
-      toast.error("An error occurred while fetching Google Auth URL.");
+      // toast.error("An error occurred while fetching Google Auth URL.");
     } finally {
       setLoading(false);
     }
@@ -115,9 +149,7 @@ const AuthOptions = () => {
 
   return (
     <div className="auth-container">
-      {/* ToastContainer for showing notifications */}
       <ToastContainer />
-
       {!showOtpForm ? (
         <div className="auth-options-row">
           <div className="auth-option">
@@ -149,7 +181,6 @@ const AuthOptions = () => {
                 </ul>
               </div>
               <div className="col-md-6 form-container">
-                {/* Back Button */}
                 <button
                   type="button"
                   className="back-button"

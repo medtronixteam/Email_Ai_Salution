@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./BusinessEmailForm.css";
@@ -17,6 +17,43 @@ const BusinessEmailForm = () => {
     main_from_address: "",
     main_from_name: "",
   });
+
+  // Fetch existing data on component mount
+  useEffect(() => {
+    const fetchEmailSettings = async () => {
+      const baseUrl = config.baseUrl;
+      try {
+        const response = await fetch(`${baseUrl}/api/email/email`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = await response.json();
+
+        if (response.status === 200 && data.status === "success") {
+          // Populate the form data with the response
+          setFormData({
+            main_mailer: data.data.main_mailer,
+            main_host: data.data.main_host,
+            main_port: data.data.main_port,
+            main_username: data.data.main_username,
+            main_password: data.data.main_password,
+            main_encryption: data.data.main_encryption,
+            main_from_address: data.data.main_from_address,
+            main_from_name: data.data.main_from_name,
+          });
+        } else {
+          // toast.error(data.message || "Failed to fetch email settings.");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        // toast.error("An error occurred while fetching email settings.");
+      }
+    };
+
+    fetchEmailSettings();
+  }, [token]); // Depend on token to refetch if it changes
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -59,16 +96,15 @@ const BusinessEmailForm = () => {
           main_from_name: "",
         });
 
-        toast.success(data.message || "Email settings saved successfully!");
+        // toast.success(data.message || "Email settings saved successfully!");
       } else {
-        toast.error(
-          data.message || "Failed to save email settings. Please try again."
-        );
+        // toast.error(
+        //   data.message || "Failed to save email settings. Please try again."
+        // );
       }
     } catch (error) {
       console.error("Error:", error);
-      // Show a generic error toast
-      toast.error("An error occurred. Please try again.");
+      // toast.error("An error occurred. Please try again.");
     }
   };
 
@@ -100,6 +136,7 @@ const BusinessEmailForm = () => {
                   name="main_mailer"
                   value={formData.main_mailer}
                   onChange={handleInputChange}
+                  readOnly
                 />
               </div>
               <div className="form-group">
@@ -120,6 +157,7 @@ const BusinessEmailForm = () => {
                   name="main_port"
                   value={formData.main_port}
                   onChange={handleInputChange}
+                  readOnly
                 />
               </div>
               <div className="form-group">
@@ -150,6 +188,7 @@ const BusinessEmailForm = () => {
                   name="main_encryption"
                   value={formData.main_encryption}
                   onChange={handleInputChange}
+                  readOnly
                 />
               </div>
               <div className="form-group">
@@ -159,6 +198,7 @@ const BusinessEmailForm = () => {
                   id="main_from_address"
                   name="main_from_address"
                   value={formData.main_from_address}
+                  readOnly
                 />
               </div>
               <div className="form-group">

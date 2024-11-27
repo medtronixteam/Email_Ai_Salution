@@ -257,14 +257,14 @@ const CardRow = () => {
       // toast.error("Please select a group.");
       return false;
     }
-    if (
-      step === 3 &&
-      (formData.campaignDate.trim() === "" ||
-        formData.campaignTime.trim() === "")
-    ) {
-      // toast.error("Please enter both date and time.");
-      return false;
-    }
+    // if (
+    //   step === 3 &&
+    //   (formData.campaignDate.trim() === "" ||
+    //     formData.campaignTime.trim() === "")
+    // ) {
+    //   // toast.error("Please enter both date and time.");
+    //   return false;
+    // }
     if (step === 4 && formData.mailType === "") {
       // toast.error("Please select a mail type.");
       return false;
@@ -375,55 +375,44 @@ const CardRow = () => {
         return false;
       }
 
-      // **Step 4: Validation**
       if (!formData.campaignName.trim()) {
-        // toast.error("Campaign Name is required!");
         return false;
       }
       if (!formData.selectedGroupId.trim()) {
-        // toast.error("Please select a group!");
         return false;
       }
       if (!formData.campaignDate.trim()) {
-        // toast.error("Please provide a campaign date!");
         return false;
       }
       if (!formData.campaignTime.trim()) {
-        // toast.error("Please provide a campaign time!");
         return false;
       }
       if (!formData.subject.trim()) {
-        // toast.error("Subject is required!");
         return false;
       }
       if (!editorContent.trim()) {
-        // toast.error("Message content is required!");
         return false;
       }
 
-      // **Step 5: Submit API call**
       const response = await fetch(`${baseUrl}/api/campaign`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        body: formDataToSend, // Send FormData as body
+        body: formDataToSend,
       });
 
       if (response.ok) {
         const data = await response.json();
         console.log("Campaign created successfully:", data);
-        // toast.success("Campaign created successfully!");
         return true;
       } else {
         const errorData = await response.json();
         console.error("API Error:", errorData);
-        // toast.error("Failed to create campaign: " + errorData.message);
         return false;
       }
     } catch (error) {
       console.error("Error while creating campaign:", error);
-      // toast.error("An error occurred. Please try again.");
       return false;
     }
   };
@@ -705,7 +694,16 @@ const CardRow = () => {
 
                         {/* PDF Upload */}
                         <button className="pdf-icon" onClick={openPdfModal}>
-                          <FaFilePdf style={{ color: "black" }} />
+                          {/* <FaFilePdf style={{ color: "black" }} /> */}
+                          <span
+                            style={{
+                              color: "black",
+                              fontSize: "15px",
+                              borderBottom: "3px solid black",
+                              fontWeight: "bolder",
+                            }}>
+                            Attached Files
+                          </span>
                         </button>
 
                         {/* Modal for PDF */}

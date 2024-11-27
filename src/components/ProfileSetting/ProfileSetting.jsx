@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./ProfileSetting.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -467,9 +467,11 @@ const ProfileSetting = () => {
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const { token } = useAuth();
-
+  const baseUrl = config.baseUrl;
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
 
@@ -479,7 +481,6 @@ const ProfileSetting = () => {
     }
 
     try {
-      const baseUrl = config.baseUrl;
       const response = await fetch(`${baseUrl}/api/change-password`, {
         method: "POST",
         headers: {
@@ -524,7 +525,7 @@ const ProfileSetting = () => {
 
       if (response.ok) {
         toast.success("Time zone updated successfully!");
-        setTimezone(""); // Reset timezone selection after success
+        setTimezone("");
       } else {
         toast.error("Failed to update time zone. Try again.");
       }
@@ -544,7 +545,30 @@ const ProfileSetting = () => {
   const toggleConfirmPasswordVisibility = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${baseUrl}/api/timezone`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const result = await response.json();
+        setData(result);
+        // console.log(result);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
 
+    fetchData();
+  }, []);
+  const timeZone = data ? data.timezone : "No timezone available";
   return (
     <div className="profile-container">
       {/* Show options when no card is selected */}
@@ -561,6 +585,7 @@ const ProfileSetting = () => {
             onClick={() => setSelectedOption("timezone")}>
             <FontAwesomeIcon icon={faClock} className="option-icon" />
             <h3>Change Time Zone</h3>
+            <p>Current Time Zone: {timeZone} </p>
           </div>
         </div>
       )}

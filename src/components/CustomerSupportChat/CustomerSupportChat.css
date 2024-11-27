@@ -139,11 +139,10 @@ td button:hover {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Chat messages styling */
 .chat-messages {
   display: flex;
   flex-direction: column;
-  gap: 15px; /* Spacing between messages */
+  gap: 15px; 
 }
 
 .chat-message {
@@ -153,8 +152,8 @@ td button:hover {
 }
 
 .user-message {
-  margin-left: auto; /* Push user messages to the right */
-  flex-direction: row-reverse; /* Icon on the right side */
+  margin-left: auto; 
+  flex-direction: row-reverse;
 }
 
 .user-message .chat-text {
@@ -167,7 +166,7 @@ td button:hover {
 }
 
 .admin-message {
-  margin-right: auto; /* Push admin messages to the left */
+  margin-right: auto;
 }
 
 .admin-message .chat-text {
@@ -242,7 +241,10 @@ td button:hover {
   justify-content: flex-end;
   margin-top: 20px;
 }
-
+.pagination span {
+  color: black;
+  font-weight: bolder;
+} 
 .pagination button {
   padding: 10px 20px;
   margin: 0 5px;

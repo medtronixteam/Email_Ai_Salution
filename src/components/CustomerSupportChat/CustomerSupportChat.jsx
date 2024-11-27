@@ -281,6 +281,7 @@ const CustomerSupport = () => {
                 <tr>
                   <th>Ticket Title</th>
                   <th>Status</th>
+                  <th>Latest Message</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -303,6 +304,12 @@ const CustomerSupport = () => {
                     <tr key={ticket.id}>
                       <td>{ticket.title}</td>
                       <td>{ticket.status}</td>
+                      <td>
+                        {ticket.latest_message
+                          ? ticket.latest_message.description
+                          : "No messages"}
+                      </td>
+
                       <td>
                         <button onClick={() => handleMoreDiscussion(ticket)}>
                           View Details
