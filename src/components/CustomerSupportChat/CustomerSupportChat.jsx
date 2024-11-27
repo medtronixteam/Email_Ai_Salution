@@ -20,11 +20,19 @@ const CustomerSupport = () => {
   const [loading, setLoading] = useState(false);
   const baseUrl = config.baseUrl;
 
+  // Pagination State
+  const [currentPage, setCurrentPage] = useState(1);
+  const [ticketsPerPage] = useState(10); // Number of tickets per page
+
   useEffect(() => {
     const fetchTickets = async () => {
       try {
         const response = await axios.get(`${baseUrl}/api/tickets`, {
           headers: { Authorization: `Bearer ${token}` },
+          params: {
+            page: currentPage,
+            limit: ticketsPerPage, // Set the limit for pagination
+          },
         });
         setTickets(response.data.data || []);
       } catch (error) {
@@ -33,7 +41,7 @@ const CustomerSupport = () => {
       }
     };
     fetchTickets();
-  }, [token]);
+  }, [token, currentPage]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -173,6 +181,12 @@ const CustomerSupport = () => {
     }
   };
 
+  // Pagination logic
+  const totalTickets = tickets.length;
+  const totalPages = Math.ceil(totalTickets / ticketsPerPage);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
     <div className="customer-support">
       <h2>Customer Support</h2>
@@ -280,24 +294,37 @@ const CustomerSupport = () => {
                 </tr>
               )}
               <tbody>
-                {Array.isArray(tickets) &&
-                  tickets.map((ticket) => (
+                {tickets
+                  .slice(
+                    (currentPage - 1) * ticketsPerPage,
+                    currentPage * ticketsPerPage
+                  )
+                  .map((ticket) => (
                     <tr key={ticket.id}>
                       <td>{ticket.title}</td>
                       <td>{ticket.status}</td>
                       <td>
-                        {ticket.status !== "Pending" && (
-                          <button
-                            onClick={() => handleMoreDiscussion(ticket)}
-                            className="more-button">
-                            More Discussion
-                          </button>
-                        )}
+                        <button onClick={() => handleMoreDiscussion(ticket)}>
+                          View Details
+                        </button>
                       </td>
                     </tr>
                   ))}
               </tbody>
             </table>
+            <div className="pagination">
+              <button
+                onClick={() => paginate(currentPage - 1)}
+                disabled={currentPage === 1}>
+                Previous
+              </button>
+              <span>{currentPage}</span>
+              <button
+                onClick={() => paginate(currentPage + 1)}
+                disabled={currentPage === totalPages}>
+                Next
+              </button>
+            </div>
           </div>
         )
       )}
@@ -305,4 +332,5 @@ const CustomerSupport = () => {
     </div>
   );
 };
+
 export default CustomerSupport;

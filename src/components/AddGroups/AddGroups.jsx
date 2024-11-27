@@ -110,7 +110,6 @@ const AddGroups = ({ groups, setGroups }) => {
   const baseUrl = config.baseUrl;
   const handleViewUsers = async (group) => {
     setLoading(true);
-
     try {
       const response = await fetch(`${baseUrl}/api/addusers/${group.id}`, {
         method: "GET",
@@ -245,8 +244,11 @@ const AddGroups = ({ groups, setGroups }) => {
         </table>
       ) : (
         <Card className="user-list-card">
-          <Card.Header>
+          <Card.Header className="d-flex justify-content-between align-items-center">
             <h2>Users in {viewingGroup.name}</h2>
+            <span style={{ fontWeight: "bold", color: "black" }}>
+              Total Users: {viewedUsers.length}
+            </span>
           </Card.Header>
           <Card.Body>
             {viewedUsers.length > 0 ? (

@@ -19,6 +19,7 @@ import NotFound from "./components/NotFound/NotFound.jsx";
 import EmailTemplates from "./components/Template/EmailTemplates.jsx";
 import CustomerSupport from "./components/CustomerSupportChat/CustomerSupportChat.jsx";
 import Subscription from "./components/Subscrption/Subscription.jsx";
+import SignupPage from "./components/SignupPage/SignupPage.js";
 const App = () => {
   const { token } = useAuth();
   const [groups, setGroups] = useState([]);
@@ -53,7 +54,7 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-
+        <Route path="/signup" element={<SignupPage />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/email-templates" element={<EmailTemplates />} />
         <Route path="/login" element={<Login />} />
@@ -66,7 +67,7 @@ const App = () => {
             element={<CardRow groups={groups} setGroups={setGroups} />}
           />
           <Route path="customer-support" element={<CustomerSupport />} />{" "}
-          <Route path="subscription" element={<Subscription/>} />
+          <Route path="subscription" element={<Subscription />} />
           <Route path="Profilesetting" element={<ProfileSetting />} />
           <Route
             path="groups"

@@ -100,7 +100,6 @@ const BusinessEmailForm = () => {
                   name="main_mailer"
                   value={formData.main_mailer}
                   onChange={handleInputChange}
-                  readOnly
                 />
               </div>
               <div className="form-group">
@@ -121,7 +120,6 @@ const BusinessEmailForm = () => {
                   name="main_port"
                   value={formData.main_port}
                   onChange={handleInputChange}
-                  readOnly
                 />
               </div>
               <div className="form-group">
@@ -152,7 +150,6 @@ const BusinessEmailForm = () => {
                   name="main_encryption"
                   value={formData.main_encryption}
                   onChange={handleInputChange}
-                  readOnly
                 />
               </div>
               <div className="form-group">
@@ -162,7 +159,6 @@ const BusinessEmailForm = () => {
                   id="main_from_address"
                   name="main_from_address"
                   value={formData.main_from_address}
-                  readOnly
                 />
               </div>
               <div className="form-group">
