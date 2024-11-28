@@ -5,13 +5,14 @@
   background-color: #6746af;
   font-family: "Arial", sans-serif;
   color: white;
-
   margin: 1rem;
 }
+
 .side-image img {
   width: 403px;
   border-radius: 10px 0 0 10px;
 }
+
 .signup-card {
   background: #202020;
   padding: 10px 20px;
@@ -20,12 +21,12 @@
   max-width: 450px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
   text-align: center;
-  /* margin: 1rem 0 1rem 0; */
 }
 
 .logo-wrapper {
   margin-bottom: 20px;
 }
+
 .signup-logo {
   width: 250px;
 }
@@ -35,6 +36,7 @@
   margin-bottom: 10px;
   color: #ffffff;
 }
+
 .signup-subtitle {
   font-size: 1rem;
   color: #bbbbbb;
@@ -100,4 +102,74 @@
 
 .signin-link:hover {
   text-decoration: underline;
+}
+
+/* Media Query for Responsiveness */
+@media screen and (max-width: 768px) {
+  .signup-page {
+    flex-direction: column;
+    margin: 1rem 0;
+    justify-content: flex-start; /* Ensures signup card appears before image */
+  }
+
+  .side-image img {
+    width: 100%;
+    border-radius: 10px;
+    margin-top: 20px; /* Ensures image appears below signup card */
+  }
+
+  .signup-card {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .signup-heading {
+    font-size: 1.5rem;
+  }
+
+  .signup-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .signup-input {
+    font-size: 0.9rem;
+  }
+
+  .signup-button {
+    font-size: 1rem;
+  }
+
+  .signup-footer {
+    font-size: 0.8rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .signup-page {
+    padding: 0;
+  }
+
+  .signup-card {
+    padding: 15px;
+  }
+
+  .signup-heading {
+    font-size: 1.3rem;
+  }
+
+  .signup-subtitle {
+    font-size: 0.8rem;
+  }
+
+  .signup-input {
+    font-size: 0.8rem;
+  }
+
+  .signup-button {
+    font-size: 1rem;
+  }
+
+  .signup-footer {
+    font-size: 0.7rem;
+  }
 }
