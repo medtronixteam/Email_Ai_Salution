@@ -53,7 +53,7 @@ const BusinessEmailForm = () => {
     };
 
     fetchEmailSettings();
-  }, [token]); // Depend on token to refetch if it changes
+  }, [token]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -144,7 +144,6 @@ const BusinessEmailForm = () => {
                   name="main_mailer"
                   value={formData.main_mailer}
                   onChange={handleInputChange}
-                  readOnly
                 />
               </div>
               <div className="form-group">
