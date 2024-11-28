@@ -62,7 +62,16 @@
   transition: border-color 0.3s ease;
   width: 100%;
 }
-
+select {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s ease;
+  width: 100%;
+}
+  
 .form-group input:focus {
   border-color: #000000;
 }
