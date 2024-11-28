@@ -20,17 +20,18 @@
 
 .avatar {
   margin-bottom: 20px;
-  background-color: #252525;
+  background-color: white !important;
   color: white !important;
   padding: 20px;
-  border-radius: 50%;
+  border-radius: 50% !important;
   display: inline-block;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 
 .user-icon {
-  font-size: 60px;
-  color: white;
+  font-size: 50px;
+  color: black;
+  margin-left: 4px;
 }
 
 .input-field {

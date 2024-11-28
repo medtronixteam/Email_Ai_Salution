@@ -20,6 +20,8 @@ import EmailTemplates from "./components/Template/EmailTemplates.jsx";
 import CustomerSupport from "./components/CustomerSupportChat/CustomerSupportChat.jsx";
 import Subscription from "./components/Subscrption/Subscription.jsx";
 import SignupPage from "./components/SignupPage/SignupPage.js";
+import VerificationPage from "./components/VerificationPage/VerificationPage.js";
+import AIChatComponent from "./components/AIChatComponent/AIChatComponent.js";
 const App = () => {
   const { token } = useAuth();
   const [groups, setGroups] = useState([]);
@@ -55,10 +57,13 @@ const App = () => {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/signup" element={<SignupPage />} />
+      
         <Route path="*" element={<NotFound />} />
         <Route path="/email-templates" element={<EmailTemplates />} />
         <Route path="/login" element={<Login />} />
-        {/* <Route path="/signup" element={<SignUp />} /> */}
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/verify" element={<VerificationPage />} />
+
         <Route
           path="/dashboard"
           element={<ProtectedRoute element={<Dashboard />} />}>
@@ -69,6 +74,7 @@ const App = () => {
           <Route path="customer-support" element={<CustomerSupport />} />{" "}
           <Route path="subscription" element={<Subscription />} />
           <Route path="Profilesetting" element={<ProfileSetting />} />
+          <Route path="AIChat" element={<AIChatComponent />} />
           <Route
             path="groups"
             element={

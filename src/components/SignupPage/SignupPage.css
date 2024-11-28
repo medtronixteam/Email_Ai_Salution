@@ -1,21 +1,26 @@
 .signup-page {
-  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #6746af;
   font-family: "Arial", sans-serif;
   color: white;
-}
 
+  margin: 1rem;
+}
+.side-image img {
+  width: 403px;
+  border-radius: 10px 0 0 10px;
+}
 .signup-card {
   background: #202020;
-  padding: 20px 30px;
-  border-radius: 15px;
+  padding: 10px 20px;
+  border-radius: 0px 10px 10px 0;
   width: 100%;
-  max-width: 500px;
+  max-width: 450px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
   text-align: center;
+  /* margin: 1rem 0 1rem 0; */
 }
 
 .logo-wrapper {
@@ -39,14 +44,14 @@
 .signup-form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 10px;
 }
 
 .signup-input {
   width: 100%;
   background-color: #2a2a2a;
   border: 1px solid #444;
-  padding: 12px;
+  padding: 8px;
   border-radius: 8px;
   font-size: 1rem;
   color: #ffffff;

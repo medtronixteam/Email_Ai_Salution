@@ -89,6 +89,10 @@ const Login = () => {
           <button type="submit" className="login-button" disabled={isLoading}>
             {isLoading ? "Logging in..." : "Login"}
           </button>
+          <p className="signup-link">
+            Don't have an account?{" "}
+            <span onClick={() => navigate("/signup")}>Sign up</span>
+          </p>
         </form>
       </div>
     </div>

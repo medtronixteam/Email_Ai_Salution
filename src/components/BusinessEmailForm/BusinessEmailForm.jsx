@@ -10,10 +10,10 @@ const BusinessEmailForm = () => {
   const [formData, setFormData] = useState({
     main_mailer: "Email",
     main_host: "",
-    main_port: "587",
+    main_port: "587", // Default port for TLS
     main_username: "",
     main_password: "",
-    main_encryption: "TLS",
+    main_encryption: "TLS", // Default encryption
     main_from_address: "",
     main_from_name: "",
   });
@@ -66,6 +66,16 @@ const BusinessEmailForm = () => {
     }));
   };
 
+  const handleEncryptionChange = (e) => {
+    const encryptionType = e.target.value;
+    // Update port based on encryption type (SSL -> 465, TLS -> 587)
+    setFormData((prevState) => ({
+      ...prevState,
+      main_encryption: encryptionType,
+      main_port: encryptionType === "SSL" ? "465" : "587",
+    }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const baseUrl = config.baseUrl;
@@ -98,9 +108,7 @@ const BusinessEmailForm = () => {
 
         // toast.success(data.message || "Email settings saved successfully!");
       } else {
-        // toast.error(
-        //   data.message || "Failed to save email settings. Please try again."
-        // );
+        // toast.error(data.message || "Failed to save email settings. Please try again.");
       }
     } catch (error) {
       console.error("Error:", error);
@@ -157,7 +165,6 @@ const BusinessEmailForm = () => {
                   name="main_port"
                   value={formData.main_port}
                   onChange={handleInputChange}
-                  readOnly
                 />
               </div>
               <div className="form-group">
@@ -182,14 +189,14 @@ const BusinessEmailForm = () => {
               </div>
               <div className="form-group">
                 <label htmlFor="main_encryption">Encryption</label>
-                <input
-                  type="text"
+                <select
                   id="main_encryption"
                   name="main_encryption"
                   value={formData.main_encryption}
-                  onChange={handleInputChange}
-                  readOnly
-                />
+                  onChange={handleEncryptionChange}>
+                  <option value="SSL">SSL</option>
+                  <option value="TLS">TLS</option>
+                </select>
               </div>
               <div className="form-group">
                 <label htmlFor="main_from_address">From Address</label>

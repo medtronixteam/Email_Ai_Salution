@@ -59,7 +59,11 @@ const Navbar = () => {
                     Plans
                   </Link>
                 </li>
-
+                <li className="nav-item">
+                  <Link className="nav-link text-white" to="/dashboard/AIChat">
+                    AI Chat
+                  </Link>
+                </li>
                 <li className="nav-item">
                   <a
                     className="nav-link text-white"
