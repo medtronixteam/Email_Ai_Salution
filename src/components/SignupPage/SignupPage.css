@@ -83,11 +83,10 @@
 }
 
 .signup-button:hover {
-  background-color: #541283; /* Darker purple */
+  background-color: #541283; 
   transform: translateY(-3px);
 }
 
-/* Footer */
 .signup-footer {
   margin-top: 20px;
   font-size: 0.9rem;

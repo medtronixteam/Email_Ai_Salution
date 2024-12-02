@@ -27,6 +27,40 @@ const Campaign = () => {
 
   const location = useLocation();
   const { token } = useAuth();
+  const [reports, setReports] = useState([]);
+  const [showReports, setShowReports] = useState(false);
+
+  const fetchCampaignReports = async (campaignId) => {
+    setLoading(true);
+    const baseUrl = config.baseUrl;
+    try {
+      const response = await axios.get(
+        `${baseUrl}/api/campaign/tracking/${campaignId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.status === 200) {
+        const data = Array.isArray(response.data.data)
+          ? response.data.data
+          : [];
+        console.log("Fetched Reports Data:", data); // Debugging log
+        setReports(data); // Setting the data directly
+        setShowReports(true); // Show reports section
+      }
+    } catch (error) {
+      console.error("Error fetching campaign reports:", error);
+      toast.error("Failed to fetch reports.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleReportClick = (campaignId) => {
+    fetchCampaignReports(campaignId);
+  };
 
   const fetchCampaigns = async () => {
     setLoading(true);
@@ -203,10 +237,10 @@ const Campaign = () => {
   };
 
   const handleBack = () => {
-    setShowEditSection(false);
+    setShowReports(false); // Hide reports section and show campaign list
   };
 
-  const showCampaignsTable = location.pathname === "/dashboard/campaign";
+  const showCampaignsTable = !showReports;
 
   return (
     <div className="campaign-container">
@@ -217,7 +251,7 @@ const Campaign = () => {
         </div>
       )}
 
-      {showCampaignsTable && !showEditSection && (
+      {showCampaignsTable && !showEditSection && !showReports && (
         <div
           className="campaign-card-wrapper"
           style={{
@@ -313,6 +347,12 @@ const Campaign = () => {
                                 Delete
                               </button>
                             )}
+                            {/* Reports Button */}
+                            <button
+                              className="report-button"
+                              onClick={() => handleReportClick(campaign.id)}>
+                              Reports
+                            </button>
                           </td>
                         </tr>
                       ))}
@@ -435,6 +475,44 @@ const Campaign = () => {
               Back
             </Button>
           </Form>
+        </div>
+      )}
+      {showReports && (
+        <div className="reports-section">
+          <h3>Campaign Tracking History</h3>
+          <table className="reports-table">
+            <thead>
+              <tr>
+                <th>Email</th>
+                <th>Sent</th>
+                <th>Open</th>
+                {/* <th>Details</th> */}
+              </tr>
+            </thead>
+            <tbody>
+              {reports.length === 0 ? (
+                <tr>
+                  <td colSpan="4" style={{ textAlign: "center" }}>
+                    No tracking history available.
+                  </td>
+                </tr>
+              ) : (
+                reports.map((report, index) => (
+                  <tr key={index}>
+                    <td>{report.email}</td>
+                    <td>{report.sent_at}</td>
+                     <td>{report.open_at}</td>{" "}
+                    {/* <td>{report.email_id}</td>{" "} */}
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+          <button
+            onClick={() => setShowReports(false)}
+            className="back-button-reports">
+            Back to Campaigns
+          </button>
         </div>
       )}
     </div>

@@ -22,6 +22,7 @@ import Subscription from "./components/Subscrption/Subscription.jsx";
 import SignupPage from "./components/SignupPage/SignupPage.js";
 import VerificationPage from "./components/VerificationPage/VerificationPage.js";
 import AIChatComponent from "./components/AIChatComponent/AIChatComponent.js";
+import Frame from "./ifrma.js";
 const App = () => {
   const { token } = useAuth();
   const [groups, setGroups] = useState([]);
@@ -57,8 +58,8 @@ const App = () => {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/signup" element={<SignupPage />} />
-      
-        <Route path="*" element={<NotFound />} />
+        <Route path="/frame" element={<Frame />} />
+        {/* <Route path="*" element={<NotFound />} /> */}
         <Route path="/email-templates" element={<EmailTemplates />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />

@@ -30,6 +30,24 @@
   z-index: 1000;
 }
 
+.reports-section h3 {
+  text-align: center;
+  color: white;
+  padding: 20px 0;
+}
+.back-button-reports {
+  float: right;
+  margin: 20px 0;
+  background-color: black;
+}
+.back-button-reports:hover {
+  cursor: pointer;
+  opacity: 0.8;
+  background-color: #000000;
+}
+.reports-table th {
+  background-color: black;
+}
 @keyframes spin {
   0% {
     transform: rotate(0deg);
