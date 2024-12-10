@@ -441,7 +441,8 @@ const CardRow = () => {
         formDataToSend.append("message", htmlCode);
       } else {
         console.error("No valid message content provided!");
-        return; 
+        alert("Please provide a data atleast in one Tab");
+        return;
       }
 
       //  formDataToSend.append("message", setTemplate);
