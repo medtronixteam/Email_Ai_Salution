@@ -137,9 +137,9 @@ button:hover {
   opacity: 0.8;
 }
 
-/* Media Queries for Responsiveness */
+ 
 @media (max-width: 1024px) {
-  /* For tablets and smaller devices */
+  
   .campaign-container {
     padding: 15px;
   }

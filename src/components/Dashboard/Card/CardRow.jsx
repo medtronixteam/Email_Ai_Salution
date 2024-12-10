@@ -41,8 +41,8 @@ const CardRow = () => {
   });
 
   const [editorContent, setEditorContent] = useState("");
-  const [showGroupModal, setShowGroupModal] = useState(false); // For group modal
-  const [showPdfModal, setShowPdfModal] = useState(false); // For PDF modal
+  const [showGroupModal, setShowGroupModal] = useState(false);
+  const [showPdfModal, setShowPdfModal] = useState(false);
 
   const [showError, setShowError] = useState(false);
   const [useFileInput, setUseFileInput] = useState(false);
@@ -55,6 +55,77 @@ const CardRow = () => {
   const [modalTab, setModalTab] = useState("recent");
   const [recentFiles, setRecentFiles] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [templates, setTemplates] = useState([]);
+  const [selectedTemplate, setSelectedTemplate] = useState(null);
+  const [apiResponseToken, setApiResponseToken] = useState(null);
+  const [template, setTemplate] = useState([]);
+  const [subject, setSubject] = useState("");
+  const [htmlCode, setHtmlCode] = useState("");
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+  // console.log("Current HTML Code:", htmlCode);
+  const handleHtmlInput = (e) => {
+    const value = e.target.value;
+    setHtmlCode(value);
+    // console.log("Current HTML Code:", value);
+  };
+
+  useEffect(() => {
+    const contents = JSON.stringify({
+      content1: `${formData.subject}`,
+      content2: `${htmlMessage}`,
+    });
+
+    fetch(`${baseUrl}/api/templates/content`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        contents,
+        template_id: selectedTemplate?.id,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data && data.template) {
+          setTemplate(data.template);
+        }
+
+        if (data && data.token) {
+          setApiResponseToken(data.token);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, [baseUrl, formData.subject, htmlMessage, selectedTemplate]);
+
+  const handleTemplateClick = (template) => {
+    setSelectedTemplate(template);
+  };
+  useEffect(() => {
+    const fetchTemplates = async () => {
+      try {
+        const response = await fetch(`${baseUrl}/api/templates/list`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = await response.json();
+        if (data.status === "success") {
+          setTemplates(data.data);
+        }
+      } catch (error) {
+        console.error("Error fetching templates:", error);
+      }
+    };
+
+    fetchTemplates();
+  }, []);
   useEffect(() => {
     const fetchGroups = async () => {
       try {
@@ -89,8 +160,16 @@ const CardRow = () => {
       fetchGroups();
     }
   }, [token]);
-  const handleTabClick = (tab) => {
-    setActiveTab(tab);
+  const handleTabClick = (tabName) => {
+    if (activeTab === "text") {
+      setEditorContent(editorContent.trim());
+    } else if (activeTab === "html") {
+      setHtmlMessage(htmlMessage.trim());
+    } else if (activeTab === "htmlcode") {
+      setHtmlCode(htmlCode.trim());
+    }
+
+    setActiveTab(tabName);
   };
 
   const fetchRecentFiles = async () => {
@@ -349,7 +428,23 @@ const CardRow = () => {
       formDataToSend.append("campaign_date", formData.campaignDate);
       formDataToSend.append("campaign_time", formData.campaignTime);
       formDataToSend.append("subject", formData.subject);
-      formDataToSend.append("message", editorContent);
+      if (
+        activeTab === "text" &&
+        editorContent &&
+        editorContent.trim() !== "" &&
+        editorContent.trim() !== "<p><br></p>"
+      ) {
+        formDataToSend.append("message", editorContent);
+      } else if (activeTab === "html" && template) {
+        formDataToSend.append("message", template);
+      } else if (activeTab === "htmlcode" && htmlCode) {
+        formDataToSend.append("message", htmlCode);
+      } else {
+        console.error("No valid message content provided!");
+        return; 
+      }
+
+      //  formDataToSend.append("message", setTemplate);
 
       if (formData.selectedFileIds && formData.selectedFileIds.length > 0) {
         formDataToSend.append(
@@ -473,7 +568,7 @@ const CardRow = () => {
       // );
     }
   };
-
+  const encodedMessage = encodeURIComponent(htmlMessage);
   return (
     <div className="card-container">
       <ToastContainer />
@@ -644,6 +739,13 @@ const CardRow = () => {
                     <button
                       className={`tab ${activeTab === "html" ? "active" : ""}`}
                       onClick={() => handleTabClick("html")}>
+                      Template
+                    </button>
+                    <button
+                      className={`tab ${
+                        activeTab === "htmlcode" ? "active" : ""
+                      }`}
+                      onClick={() => handleTabClick("htmlcode")}>
                       HTML
                     </button>
                   </div>
@@ -655,8 +757,8 @@ const CardRow = () => {
                           type="text"
                           placeholder="Subject...."
                           name="subject"
-                          value={formData.subject} // Bind to formData
-                          onChange={handleChange} // Use handleChange for formData updates
+                          value={formData.subject}
+                          onChange={handleChange}
                           required
                           className={`form-control ${
                             showError && !formData.subject.trim()
@@ -686,11 +788,11 @@ const CardRow = () => {
                             ],
                           }}
                         />
-                        {showError && !editorContent.trim() && (
+                        {/* {showError && !editorContent.trim() && (
                           <div className="text-danger mt-2">
                             Please provide a message content.
                           </div>
-                        )}
+                        )} */}
 
                         {/* PDF Upload */}
                         <button className="pdf-icon" onClick={openPdfModal}>
@@ -720,14 +822,16 @@ const CardRow = () => {
                                   className={`modal-tab ${
                                     modalTab === "recent" ? "active" : ""
                                   }`}
-                                  onClick={() => setModalTab("recent")}>
-                                  Recent PDFs
+                                  onClick={() => setModalTab("recent")}
+                                  style={{ width: "100%", marginTop: "10px" }}>
+                                  Recent Files
                                 </button>
                                 <button
                                   className={`modal-tab ${
                                     modalTab === "upload" ? "active" : ""
                                   }`}
-                                  onClick={() => setModalTab("upload")}>
+                                  onClick={() => setModalTab("upload")}
+                                  style={{ width: "100%" }}>
                                   Select from Computer
                                 </button>
                               </div>
@@ -764,7 +868,7 @@ const CardRow = () => {
                                   <div className="upload-pdf">
                                     <input
                                       type="file"
-                                      accept="application/pdf,image/*"
+                                      accept="application/pdf"
                                       multiple
                                       onChange={handleFileChange}
                                     />
@@ -780,7 +884,7 @@ const CardRow = () => {
                           </div>
                         )}
                       </div>
-                    ) : (
+                    ) : activeTab === "html" ? (
                       <div className="html-layout">
                         <div className="editor-preview">
                           <div className="html-editor">
@@ -798,16 +902,102 @@ const CardRow = () => {
                               rows="10"
                             />
                           </div>
-
+                          {/* <h3>HTML Preview</h3> */}
                           <div className="html-preview">
-                            <h3>HTML Preview</h3>
-                            <div
+                            <iframe
+                              src={`https://admin.emailai.world/template/${apiResponseToken}/${
+                                selectedTemplate ? selectedTemplate.id : "1"
+                              }`}
+                              style={{
+                                width: "100%",
+                                height: "100%",
+                              }}></iframe>
+
+                            {/* <div
                               className="preview-content"
                               dangerouslySetInnerHTML={{ __html: htmlMessage }}
-                            />
+                            /> */}
                           </div>
                         </div>
                         {/* <button className="submit-btn">Submit</button> */}
+                        <div
+                          className="templates-container"
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            flexWrap: "wrap",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            gap: "10px",
+                            marginTop: "40px",
+                          }}>
+                          {/* <h3>Templates</h3> */}
+                          {templates.map((template) => (
+                            <div
+                              key={template.id}
+                              className="template-card"
+                              style={{
+                                cursor: "pointer",
+                                border: "1px solid black",
+                                width: "100px",
+                                height: "100px",
+                                display: "flex",
+                                flexDirection: "row",
+                                flexWrap: "wrap",
+                                alignItems: "center",
+                                justifyContent: "center",
+                              }}
+                              onClick={() => handleTemplateClick(template)}>
+                              <img
+                                src={`https://admin.emailai.world/storage/${template.image}`}
+                                alt={template.name}
+                                className="template-image"
+                                onClick={() => handleTemplateClick(template)}
+                                style={{ width: "100px", height: "100px" }}
+                              />
+                              <div className="template-details">
+                                {/* <h3>{template.name}</h3> */}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="third-tab-layout">
+                        <input
+                          type="text"
+                          placeholder="HTML Subject...."
+                          name="subject"
+                          value={formData.subject}
+                          onChange={handleInputChange}
+                          style={{
+                            marginBottom: "15px",
+                            width: "100%",
+                            height: "40px",
+                            padding: "10px",
+                            borderRadius: "5px",
+                            border: "1px solid #ccc",
+                          }}
+                        />
+                        <textarea
+                          placeholder="Enter HTML Code"
+                          value={htmlCode}
+                          onChange={handleHtmlInput} // Updates state and logs value
+                          rows="10"
+                          className="form-control"
+                          style={{ marginBottom: "15px" }}></textarea>
+
+                        {/* Live Preview */}
+                        <div
+                          className="html-preview"
+                          style={{
+                            border: "1px solid #ccc",
+                            padding: "10px",
+                            marginTop: "15px",
+                            minHeight: "200px",
+                            background: "#f9f9f9",
+                          }}
+                          dangerouslySetInnerHTML={{ __html: htmlCode }}></div>
                       </div>
                     )}
                   </div>
