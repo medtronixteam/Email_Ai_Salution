@@ -107,7 +107,7 @@ const CardRow = () => {
   const handleTemplateClick = (template) => {
     setSelectedTemplate(template);
   };
-  useEffect(() => {
+  useEffect(() => { 
     const fetchTemplates = async () => {
       try {
         const response = await fetch(`${baseUrl}/api/templates/list`, {

@@ -288,7 +288,7 @@ const CustomerSupport = () => {
               {tickets.length === 0 && (
                 <tr>
                   <td
-                    colSpan="3"
+                    colSpan="4"
                     style={{ textAlign: "center", padding: "20px" }}>
                     No tickets found...
                   </td>
