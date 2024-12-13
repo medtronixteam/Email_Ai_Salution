@@ -16,7 +16,8 @@ const AddGroups = ({ groups, setGroups }) => {
   const [fileInput, setFileInput] = useState(null);
   const [viewedUsers, setViewedUsers] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const reportsPerPage = 10;
   const handleShowModal = (group) => {
     setSelectedGroup(group);
     setGroupName(group === "New Group" ? "" : group?.name);
@@ -202,7 +203,7 @@ const AddGroups = ({ groups, setGroups }) => {
       </div>
 
       {!viewingGroup ? (
-        <table className="table table-hover">
+        <table className="table">
           <thead>
             <tr>
               <th>Group Name</th>
@@ -252,25 +253,71 @@ const AddGroups = ({ groups, setGroups }) => {
           </Card.Header>
           <Card.Body>
             {viewedUsers.length > 0 ? (
-              <Table className="table table-dark table-hover">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {viewedUsers.map((user, index) => (
-                    <tr key={index}>
-                      <td>{user.name}</td>
-                      <td>{user.email}</td>
+              <>
+                <Table className="table table-dark">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
                     </tr>
-                  ))}
-                </tbody>
-              </Table>
+                  </thead>
+                  <tbody>
+                    {viewedUsers
+                      .slice(
+                        (currentPage - 1) * reportsPerPage,
+                        currentPage * reportsPerPage
+                      )
+                      .map((user, index) => (
+                        <tr key={index}>
+                          <td>{user.name}</td>
+                          <td>{user.email}</td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </Table>
+              </>
             ) : (
               <p>No users found in this group.</p>
             )}
+            <div
+              className="pagination-controls"
+              style={{
+                marginTop: "20px",
+                marginBottom: "20px",
+                display: "flex",
+                justifyContent: "flex-end",
+              }}>
+              <button
+                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+                style={{ backgroundColor: "black", color: "white" }}>
+                Previous
+              </button>
+              <span
+                style={{
+                  color: "white",
+                  fontWeight: "bolder",
+                  margin: "10px",
+                }}>
+                Page {currentPage} of{" "}
+                {Math.ceil(viewedUsers.length / reportsPerPage)}
+              </span>
+              <button
+                onClick={() =>
+                  setCurrentPage((prev) =>
+                    Math.min(
+                      prev + 1,
+                      Math.ceil(viewedUsers.length / reportsPerPage)
+                    )
+                  )
+                }
+                disabled={
+                  currentPage === Math.ceil(viewedUsers.length / reportsPerPage)
+                }
+                style={{ backgroundColor: "black", color: "white" }}>
+                Next
+              </button>
+            </div>
             <Button
               variant="secondary"
               onClick={handleBackToGroups}

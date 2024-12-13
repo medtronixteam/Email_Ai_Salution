@@ -29,7 +29,8 @@ const Campaign = () => {
   const { token } = useAuth();
   const [reports, setReports] = useState([]);
   const [showReports, setShowReports] = useState(false);
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const reportsPerPage = 10;
   const fetchCampaignReports = async (campaignId) => {
     setLoading(true);
     const baseUrl = config.baseUrl;
@@ -110,6 +111,30 @@ const Campaign = () => {
     }
   }, [token]);
 
+  const UnsentAPi = async (id) => {
+    // console.log();
+    try {
+      const response = await fetch(
+        `${config.baseUrl}/api/campaign/${id}/unsentResend`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to trigger API");
+      }
+
+      const data = await response.json();
+      // console.log("API Call Success:", data);
+    } catch (error) {
+      console.error("API Call Error:", error);
+    }
+  };
   const startCampaign = async (id) => {
     setLoading(true);
     const baseUrl = config.baseUrl;
@@ -288,6 +313,9 @@ const Campaign = () => {
                       <tr>
                         <th className="table-header">Name</th>
                         <th className="table-header">Status</th>
+                        <th className="table-header">Send Mails</th>
+                        <th className="table-header">UnSend Mails</th>
+
                         <th className="table-header">Time</th>
                         <th className="table-header">Action</th>
                       </tr>
@@ -306,6 +334,11 @@ const Campaign = () => {
                         <tr key={campaign.id}>
                           <td className="table-cell">{campaign.name}</td>
                           <td className="table-cell">{campaign.status}</td>
+                          <td className="table-cell">{campaign.sent_mails}</td>
+                          <td className="table-cell">
+                            {campaign.unsent_mails}
+                          </td>
+
                           <td className="table-cell">
                             {campaign.campaign_time}
                           </td>
@@ -324,7 +357,18 @@ const Campaign = () => {
                                 Start again
                               </button>
                             )}
-
+                            {/* {campaign.status === "completed" && (
+                              <button
+                                className="start-button"
+                                onClick={() => startCampaign(campaign.id)}>
+                                Unsent Resend
+                              </button>
+                            )} */}
+                            {campaign.unsent_mails > 0 && (
+                              <button onClick={() => UnsentAPi(campaign.id)}>
+                                Unsent Resend
+                              </button>
+                            )}
                             {campaign.status === "started" && (
                               <button
                                 className="stop-button"
@@ -486,28 +530,65 @@ const Campaign = () => {
                 <th>Email</th>
                 <th>Sent</th>
                 <th>Open</th>
-                {/* <th>Details</th> */}
               </tr>
             </thead>
             <tbody>
               {reports.length === 0 ? (
                 <tr>
-                  <td colSpan="4" style={{ textAlign: "center" }}>
+                  <td colSpan="3" style={{ textAlign: "center" }}>
                     No tracking history available.
                   </td>
                 </tr>
               ) : (
-                reports.map((report, index) => (
-                  <tr key={index}>
-                    <td>{report.email}</td>
-                    <td>{report.sent_at}</td>
-                     <td>{report.open_at}</td>{" "}
-                    {/* <td>{report.email_id}</td>{" "} */}
-                  </tr>
-                ))
+                // Display Paginated Data
+                reports
+                  .slice(
+                    (currentPage - 1) * reportsPerPage,
+                    currentPage * reportsPerPage
+                  )
+                  .map((report, index) => (
+                    <tr key={index}>
+                      <td>{report.email}</td>
+                      <td>{report.sent_at}</td>
+                      <td>{report.open_at}</td>
+                    </tr>
+                  ))
               )}
             </tbody>
           </table>
+
+          {/* Pagination Controls */}
+          <div
+            className="pagination-controls"
+            style={{
+              marginTop: "20px",
+              marginBottom: "20px",
+              display: "flex",
+              justifyContent: "flex-end",
+            }}>
+            <button
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              style={{ backgroundColor: "black", color: "white" }}>
+              Previous
+            </button>
+            <span
+              style={{ color: "white", fontWeight: "bolder", margin: "10px" }}>
+              {currentPage} of {Math.ceil(reports.length / reportsPerPage)}
+            </span>
+            <button
+              onClick={() =>
+                setCurrentPage((prev) =>
+                  Math.min(prev + 1, Math.ceil(reports.length / reportsPerPage))
+                )
+              }
+              disabled={
+                currentPage === Math.ceil(reports.length / reportsPerPage)
+              }
+              style={{ backgroundColor: "black", color: "white" }}>
+              Next
+            </button>
+          </div>
           <button
             onClick={() => setShowReports(false)}
             className="back-button-reports">

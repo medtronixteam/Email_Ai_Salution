@@ -61,6 +61,43 @@ const CardRow = () => {
   const [template, setTemplate] = useState([]);
   const [subject, setSubject] = useState("");
   const [htmlCode, setHtmlCode] = useState("");
+  const [selectedTimeGap, setSelectedTimeGap] = useState("");
+  const [selectedCampaignGap, setSelectedCampaignGap] = useState("");
+  const [emailCount, setEmailCount] = useState("");
+  const timeGapToMinutes = (timeGap) => {
+    switch (timeGap) {
+      case "5 minutes":
+        return 5;
+      case "10 minutes":
+        return 10;
+      case "30 minutes":
+        return 30;
+      case "1 hour":
+        return 60;
+      case "24 hours":
+        return 1440;
+      case "2 days":
+        return 2880;
+      default:
+        return 0;
+    }
+  };
+
+  const handleEmailCountChange = (e) => {
+    setEmailCount(e.target.value);
+    console.log("Email Count:", emailCount);
+    // console.log("Email Count:", emailCount);
+  };
+  const handleTimeGapChange = (timeGap) => {
+    const minutes = timeGapToMinutes(timeGap);
+    setSelectedTimeGap(timeGap);
+
+    setFormData((prevData) => ({
+      ...prevData,
+      timeGapInMinutes: minutes,
+    }));
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -107,7 +144,7 @@ const CardRow = () => {
   const handleTemplateClick = (template) => {
     setSelectedTemplate(template);
   };
-  useEffect(() => { 
+  useEffect(() => {
     const fetchTemplates = async () => {
       try {
         const response = await fetch(`${baseUrl}/api/templates/list`, {
@@ -286,12 +323,12 @@ const CardRow = () => {
   const handleNext = async () => {
     if (validateStep()) {
       setShowError(false);
-      if (step < 5) {
+      if (step < 6) {
         setStep(step + 1);
-      } else if (step === 5) {
+      } else if (step === 6) {
         const isSuccessful = await handleSubmit();
         if (isSuccessful) {
-          setStep(6);
+          setStep(7);
           // toast.success("Campaign created successfully!");
         } else {
           // toast.error("Campaign creation failed. Please try again.");
@@ -310,7 +347,7 @@ const CardRow = () => {
   };
   const openPdfModal = () => {
     setShowPdfModal(true);
-    fetchRecentFiles(); // Ensure recent files are fetched when the modal opens
+    fetchRecentFiles();
   };
 
   const closePdfModal = () => {
@@ -336,19 +373,24 @@ const CardRow = () => {
       // toast.error("Please select a group.");
       return false;
     }
-    // if (
-    //   step === 3 &&
-    //   (formData.campaignDate.trim() === "" ||
-    //     formData.campaignTime.trim() === "")
-    // ) {
-    //   // toast.error("Please enter both date and time.");
-    //   return false;
-    // }
+    if (
+      step === 3 &&
+      (formData.campaignDate.trim() === "" ||
+        formData.campaignTime.trim() === "")
+    ) {
+      // toast.error("Please enter both date and time.");
+      return false;
+    }
     if (step === 4 && formData.mailType === "") {
       // toast.error("Please select a mail type.");
       return false;
     }
-    if (step === 5 && editorContent.trim() === "") {
+    // if (step === 5 && formData.timeGapInMinutes === "") {
+    //   // toast.error("Please fill in all email counts and time gaps.");
+    //   return false;
+    // }
+
+    if (step === 6 && editorContent.trim() === "") {
       // toast.error("Please enter mail content.");
       return false;
     }
@@ -427,7 +469,11 @@ const CardRow = () => {
       formDataToSend.append("group_id", formData.selectedGroupId);
       formDataToSend.append("campaign_date", formData.campaignDate);
       formDataToSend.append("campaign_time", formData.campaignTime);
+      formDataToSend.append("interval_time", formData.timeGapInMinutes);
+      formDataToSend.append("interval_mails", emailCount);
+
       formDataToSend.append("subject", formData.subject);
+
       if (
         activeTab === "text" &&
         editorContent &&
@@ -724,8 +770,70 @@ const CardRow = () => {
             </div>
           </CSSTransition>
         )}
-
         {step === 5 && (
+          <CSSTransition key="step5" timeout={500} classNames="slide">
+            <div className="card-custom">
+              <div className="card-body">
+                <div className="card-icon">
+                  <FontAwesomeIcon icon={faEnvelope} />
+                </div>
+                <h5 className="card-title">Dynamic Email Inputs</h5>
+                <input
+                  type="number"
+                  placeholder="Enter how many emails to send..."
+                  value={emailCount}
+                  onChange={handleEmailCountChange}
+                  style={{
+                    marginBottom: "10px",
+                    width: "100%",
+                    padding: "10px",
+                  }}
+                />
+                <select
+                  className="dynamic-select-field"
+                  value={selectedTimeGap}
+                  onChange={(e) => handleTimeGapChange(e.target.value)}
+                  style={{
+                    marginBottom: "10px",
+                    width: "100%",
+                    padding: "10px",
+                  }}>
+                  <option value="">Select Time Gap</option>
+                  <option value="5 minutes">5 Minutes</option>
+                  <option value="10 minutes">10 Minutes</option>
+                  <option value="30 minutes">30 Minutes</option>
+                  <option value="1 hour">1 Hour</option>
+                  <option value="24 hours">24 Hours</option>
+                  <option value="2 days">2 Days</option>
+                </select>
+
+                {/* Warning Message */}
+                <div
+                  style={{
+                    backgroundColor: "#ffdddd",
+                    border: "1px solid #f5c2c7",
+                    color: "#842029",
+                    padding: "10px",
+                    marginTop: "10px",
+                    borderRadius: "5px",
+                    fontSize: "14px",
+                  }}>
+                  <strong>Warning:</strong> Due to email send limits, you must
+                  choose how many emails <br />
+                  will be sent at a time and the time delay between each batch.
+                </div>
+
+                <button onClick={handleNext} className="btn btn-next mt-3">
+                  Next
+                </button>
+                <button onClick={handleBack} className="btn btn-back">
+                  Back
+                </button>
+              </div>
+            </div>
+          </CSSTransition>
+        )}
+        {step === 6 && (
           <CSSTransition key="step5" timeout={500} classNames="slide">
             <div className="card-custom">
               <div className="card-body">
@@ -970,7 +1078,7 @@ const CardRow = () => {
                           placeholder="HTML Subject...."
                           name="subject"
                           value={formData.subject}
-                          onChange={handleInputChange}
+                          onChange={handleChange}
                           style={{
                             marginBottom: "15px",
                             width: "100%",
@@ -1014,7 +1122,7 @@ const CardRow = () => {
           </CSSTransition>
         )}
 
-        {step === 6 && (
+        {step === 7 && (
           <CSSTransition key="step6" timeout={500} classNames="slide">
             <div className="card-custom">
               <div className="card-body">

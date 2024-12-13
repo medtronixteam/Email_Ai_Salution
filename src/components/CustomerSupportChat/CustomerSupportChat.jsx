@@ -223,7 +223,7 @@ const CustomerSupport = () => {
             type="button"
             onClick={() => setShowNewTicket(false)}
             className="cancel-button">
-            Cancel
+            Back{" "}
           </button>
         </form>
       )}
@@ -269,7 +269,7 @@ const CustomerSupport = () => {
               <button type="submit">Send</button>
             </form>
           </div>
-          <button onClick={handleBackToList} className="back-button">
+          <button onClick={handleBackToList} className="back-button-chat">
             Back
           </button>
         </div>

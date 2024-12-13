@@ -6,6 +6,7 @@
   background-color: #f4f7fa;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
 .customer-support h2 {
@@ -177,8 +178,19 @@ td button:hover {
   border: 1px solid #f5c2c7;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-.back-button {
-  margin: 30px 0;
+.back-button-chat {
+  /* margin: 30px 0; */
+  background-color: black;
+  position: absolute;
+  top: 0;
+  color: #ffffff;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 10px 20px;
+  transition: background-color 0.3s ease;
+  right: 0;
+  margin: 10px;
 }
 .chat-icon {
   font-size: 20px;
