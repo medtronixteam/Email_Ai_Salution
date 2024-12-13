@@ -313,8 +313,8 @@ const Campaign = () => {
                       <tr>
                         <th className="table-header">Name</th>
                         <th className="table-header">Status</th>
-                        <th className="table-header">Send Mails</th>
-                        <th className="table-header">UnSend Mails</th>
+                        <th className="table-header">Sent Mails</th>
+                        <th className="table-header">UnSent Mails</th>
 
                         <th className="table-header">Time</th>
                         <th className="table-header">Action</th>
@@ -366,7 +366,7 @@ const Campaign = () => {
                             )} */}
                             {campaign.unsent_mails > 0 && (
                               <button onClick={() => UnsentAPi(campaign.id)}>
-                                Unsent Resend
+                                Resend Unsent Mails{" "}
                               </button>
                             )}
                             {campaign.status === "started" && (
@@ -528,8 +528,8 @@ const Campaign = () => {
             <thead>
               <tr>
                 <th>Email</th>
-                <th>Sent</th>
-                <th>Open</th>
+                <th>Sent At</th>
+                <th>Delivered At</th>
               </tr>
             </thead>
             <tbody>
