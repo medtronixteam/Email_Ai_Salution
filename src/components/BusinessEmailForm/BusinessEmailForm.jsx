@@ -10,10 +10,10 @@ const BusinessEmailForm = () => {
   const [formData, setFormData] = useState({
     main_mailer: "Email",
     main_host: "",
-    main_port: "587", // Default port for TLS
+    main_port: "587", 
     main_username: "",
     main_password: "",
-    main_encryption: "TLS", // Default encryption
+    main_encryption: "TLS", 
     main_from_address: "",
     main_from_name: "",
   });
@@ -51,10 +51,10 @@ const BusinessEmailForm = () => {
         // toast.error("An error occurred while fetching email settings.");
       }
     };
-
-    fetchEmailSettings();
-  }, [token]);
-
+    
+        fetchEmailSettings();
+      }, [token]);
+    
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -68,7 +68,6 @@ const BusinessEmailForm = () => {
 
   const handleEncryptionChange = (e) => {
     const encryptionType = e.target.value;
-    // Update port based on encryption type (SSL -> 465, TLS -> 587)
     setFormData((prevState) => ({
       ...prevState,
       main_encryption: encryptionType,

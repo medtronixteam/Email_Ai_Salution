@@ -146,11 +146,11 @@ const Campaign = () => {
       });
       if (response.status === 200 && response.data.status === "success") {
         fetchCampaigns();
-        // toast.success("Campaign started successfully.");
+
       }
     } catch (error) {
       console.error("Error starting the campaign:", error);
-      // toast.error("Failed to start the campaign. Please try again.");
+  
     } finally {
       setLoading(false);
     }

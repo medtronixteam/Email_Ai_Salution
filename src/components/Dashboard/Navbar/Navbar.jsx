@@ -90,18 +90,18 @@ const Navbar = () => {
                   <ul
                     className="dropdown-menu dropdown-menu-end"
                     aria-labelledby="dropdownMenuButton">
-                    <li>
+                    {/* <li>
                       <Link
                         className="dropdown-item"
                         to="/dashboard/Profilesetting">
                         <FontAwesomeIcon icon={faCog} className="me-2" />{" "}
                         Profile Settings
                       </Link>
-                    </li>
+                    </li> */}
                     <li>
-                      <Link className="dropdown-item" to="/dashboard/setting">
+                      <Link className="dropdown-item" to="setting">
                         <FontAwesomeIcon icon={faCog} className="me-2" />{" "}
-                        Account Settings
+                        Settings
                       </Link>
                     </li>
                     <li>

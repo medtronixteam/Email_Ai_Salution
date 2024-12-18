@@ -23,6 +23,9 @@ import SignupPage from "./components/SignupPage/SignupPage.js";
 import VerificationPage from "./components/VerificationPage/VerificationPage.js";
 import AIChatComponent from "./components/AIChatComponent/AIChatComponent.js";
 import Frame from "./ifrma.js";
+import Setting from "./components/Setting/Setting.js";
+import ChangePassword from "./components/ChangePassword/ChangePassword.js";
+import ChangeTimeZone from "./components/ChangeTimeZone/ChangeTimeZone.js";
 const App = () => {
   const { token } = useAuth();
   const [groups, setGroups] = useState([]);
@@ -74,16 +77,19 @@ const App = () => {
           />
           <Route path="customer-support" element={<CustomerSupport />} />{" "}
           <Route path="subscription" element={<Subscription />} />
-          <Route path="Profilesetting" element={<ProfileSetting />} />
+          {/* <Route path="Profilesetting" element={<ProfileSetting />} /> */}
           <Route path="AIChat" element={<AIChatComponent />} />
+          <Route path="setting" element={<Setting />} />
           <Route
             path="groups"
             element={
               <AddGroups groups={groups} token={token} setGroups={setGroups} />
             }
           />
+          <Route path="change-timezone" element={<ChangeTimeZone />} />
+          <Route path="change-password" element={<ChangePassword />} />
           <Route path="campaign" element={<Campaign />} />
-          <Route path="setting" element={<LinkEmailAccounts />} />
+          {/* <Route path="setting" element={<LinkEmailAccounts />} /> */}
           <Route path="AuthOptions" element={<AuthOptions />} />
           <Route path="BusinessEmailForm" element={<BusinessEmailForm />} />
         </Route>
